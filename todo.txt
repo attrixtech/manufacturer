@@ -1,0 +1,2864 @@
+# MASTER DEVELOPMENT PROMPT
+# COMPLETE MANUFACTURING ERP SOFTWARE
+## Laravel + PHP + MySQL | Enterprise-Grade Manufacturing Management System
+
+---
+
+# 1. PROJECT OVERVIEW
+
+Act as a senior enterprise software architect, Laravel developer, manufacturing ERP consultant, database architect, financial systems specialist, and UI/UX designer.
+
+Your task is to design and develop a complete, production-ready Manufacturing ERP application using Laravel and MySQL.
+
+The application must be capable of managing the complete operations of a manufacturing company, starting from raw material procurement and ending with finished goods sales, delivery, accounting, and profitability analysis.
+
+This must be a fully functional ERP, not a dashboard prototype, static UI, or collection of disconnected CRUD pages.
+
+The system should provide capabilities comparable to established manufacturing platforms such as:
+- ERPNext Manufacturing.
+- Odoo Manufacturing.
+- SAP Business One manufacturing workflows.
+- Zoho Inventory and operations management.
+
+However, create an independent, modern, user-friendly application with its own architecture and design.
+
+## Target Market
+
+Primary market: India.
+
+Target industries:
+- Food processing.
+- Pharmaceutical manufacturing.
+- Garment and textile manufacturing.
+- Furniture manufacturing.
+- Electronics manufacturing.
+- Automobile component manufacturing.
+- Plastic manufacturing.
+- Metal fabrication.
+- Packaging manufacturing.
+- Chemical manufacturing.
+- FMCG manufacturing.
+- Engineering and machinery manufacturing.
+- Electrical equipment manufacturing.
+- Construction material manufacturing.
+- Printing and paper manufacturing.
+
+The architecture must support different manufacturing industries through configurable workflows, product attributes, units of measurement, production processes, quality parameters, and inventory rules.
+
+## Technology Stack
+
+| Component | Technology |
+|---|---|
+| Backend | Laravel, latest stable compatible version |
+| Programming | PHP 8.3+ |
+| Database | MySQL 8+ |
+| Frontend | Laravel Blade |
+| Interactive UI | Livewire |
+| CSS | Tailwind CSS |
+| JavaScript | Alpine.js |
+| Charts | Chart.js |
+| Authentication | Laravel Authentication |
+| Authorization | Spatie Laravel Permission or equivalent |
+| PDF | DomPDF or another compatible PDF engine |
+| Excel | Laravel Excel |
+| Queue | Laravel Queue |
+| Cache | Redis where available |
+| API | Laravel REST API |
+| Version Control | Git |
+
+Use stable, compatible package versions. Do not introduce unnecessary technologies or microservices.
+
+The application should be deployable on a standard Linux VPS with Nginx or Apache and MySQL.
+
+---
+
+# 2. SYSTEM ARCHITECTURE
+
+Build a modular ERP architecture.
+
+Every module must be independent enough to maintain and extend, but interconnected through shared business entities, services, database relationships, and workflows.
+
+## 2.1 Multi-company and Multi-branch Support
+
+Support:
+
+- Multiple companies.
+- Multiple factories.
+- Multiple manufacturing units.
+- Multiple warehouses.
+- Multiple storage locations.
+- Multiple branches.
+- Multiple departments.
+- Multiple production lines.
+- Multiple financial years.
+
+Each company must have its own:
+
+- Company name.
+- Logo.
+- GSTIN.
+- PAN.
+- Registered address.
+- Contact information.
+- Bank accounts.
+- Invoice settings.
+- Financial year.
+- Tax settings.
+- Currency settings.
+
+Support centralized administration and branch-level permissions.
+
+Implement tenant isolation if the application is deployed as a multi-customer SaaS platform. A company's data must never be accessible to another company.
+
+For the initial implementation, support a single-company installation with a database architecture that can be extended to multi-tenancy.
+
+## 2.2 Main Application Layout
+
+Create a professional ERP interface with:
+
+- Left sidebar navigation.
+- Collapsible sidebar.
+- Top navigation bar.
+- Global search.
+- Notifications.
+- User profile.
+- Company and branch selector.
+- Quick action buttons.
+- Breadcrumb navigation.
+- Responsive layouts.
+- Light and dark themes.
+
+Sidebar navigation:
+
+1. Dashboard
+2. Master Data
+3. Products
+4. Inventory
+5. Procurement
+6. Manufacturing
+7. Production Planning
+8. Quality Control
+9. Maintenance
+10. Sales
+11. Dispatch
+12. Subcontracting
+13. Finance & Accounts
+14. HR & Workforce
+15. Reports & Analytics
+16. Documents
+17. Integrations
+18. Settings
+19. Administration
+
+Menus must be permission-based.
+
+---
+
+# 3. USER MANAGEMENT AND ACCESS CONTROL
+
+Implement complete user and employee management.
+
+## 3.1 User Management
+
+Features:
+
+- Create users.
+- Edit users.
+- Activate/deactivate users.
+- Reset passwords.
+- Assign roles.
+- Assign departments.
+- Assign branches.
+- Assign warehouses.
+- Assign manufacturing units.
+- Track login history.
+- Track user activities.
+
+## 3.2 Role Management
+
+Create predefined roles:
+
+1. Super Administrator.
+2. Company Administrator.
+3. Factory Manager.
+4. Production Manager.
+5. Production Supervisor.
+6. Production Operator.
+7. Inventory Manager.
+8. Storekeeper.
+9. Purchase Manager.
+10. Purchase Executive.
+11. Quality Manager.
+12. Quality Inspector.
+13. Maintenance Manager.
+14. Sales Manager.
+15. Sales Executive.
+16. Accountant.
+17. Finance Manager.
+18. HR Manager.
+19. Dispatch Manager.
+20. Auditor.
+
+Allow administrators to create custom roles.
+
+## 3.3 Permission Management
+
+Permissions must operate at:
+
+- Module level.
+- Page level.
+- Action level.
+- Record level where required.
+
+Example:
+
+A production operator can:
+- View assigned work orders.
+- Record production quantities.
+- Record rejected quantities.
+- Report machine downtime.
+
+But cannot:
+- Modify BOM.
+- Change product cost.
+- Approve purchase orders.
+- Delete production records.
+- Modify financial transactions.
+
+Implement approval permissions separately from record creation permissions.
+
+## 3.4 Approval Workflows
+
+Support configurable approval workflows for:
+
+- Purchase requisitions.
+- Purchase orders.
+- Material issue requests.
+- Stock adjustments.
+- Production orders.
+- BOM changes.
+- Quality deviations.
+- Scrap disposal.
+- Sales quotations.
+- Credit notes.
+- Vendor payments.
+- Customer refunds.
+
+Support sequential and multi-level approvals, approval limits, delegation, rejection reasons, and approval history.
+
+---
+
+# 4. MASTER DATA MANAGEMENT
+
+Master data is the foundation of the ERP. All modules must use common master records.
+
+## 4.1 Product Master
+
+Create a comprehensive product management module.
+
+Product types:
+
+- Raw Materials.
+- Semi-Finished Goods.
+- Finished Goods.
+- Consumables.
+- Packaging Materials.
+- Spare Parts.
+- Tools.
+- Maintenance Items.
+- By-products.
+- Scrap Materials.
+- Services.
+
+Product fields:
+
+- Product code / SKU.
+- Product name.
+- Description.
+- Product category.
+- Product subcategory.
+- Product type.
+- Brand.
+- Model.
+- Product image.
+- Barcode.
+- QR code.
+- HSN code.
+- GST rate.
+- Unit of measurement.
+- Purchase unit.
+- Stock unit.
+- Sales unit.
+- Conversion factor.
+- Minimum stock level.
+- Maximum stock level.
+- Reorder level.
+- Safety stock.
+- Lead time.
+- Default supplier.
+- Preferred warehouse.
+- Shelf life.
+- Batch tracking requirement.
+- Serial tracking requirement.
+- Expiry tracking requirement.
+- Weight.
+- Dimensions.
+- Status.
+
+Support product variants such as:
+
+- Size.
+- Color.
+- Material.
+- Grade.
+- Thickness.
+- Capacity.
+- Model.
+- Packaging type.
+
+Do not force all products to have the same attributes. Allow configurable product attributes by category.
+
+## 4.2 Unit of Measurement
+
+Create a UOM management module.
+
+Examples:
+
+- Piece.
+- Kilogram.
+- Gram.
+- Metric Ton.
+- Liter.
+- Milliliter.
+- Meter.
+- Centimeter.
+- Square Meter.
+- Cubic Meter.
+- Box.
+- Packet.
+- Roll.
+- Dozen.
+- Set.
+
+Support:
+
+- Base units.
+- Purchase units.
+- Sales units.
+- Stock units.
+- Conversion factors.
+- Category-based conversions.
+- Decimal precision.
+
+Example:
+
+1 Box = 12 Pieces.
+
+A purchase of 100 boxes must correctly update stock as 1,200 pieces.
+
+Use consistent decimal precision and prevent incompatible unit conversions.
+
+## 4.3 Product Category Management
+
+Create:
+
+- Category.
+- Subcategory.
+- Product group.
+- Product attributes.
+- Brand.
+- Product specifications.
+
+Allow unlimited hierarchical categories where appropriate.
+
+## 4.4 Supplier Management
+
+Supplier fields:
+
+- Supplier code.
+- Company name.
+- Contact person.
+- Phone.
+- Email.
+- Address.
+- GSTIN.
+- PAN.
+- State.
+- Payment terms.
+- Credit period.
+- Bank details.
+- Supplier category.
+- Supplier rating.
+- Documents.
+- Status.
+
+Features:
+
+- Supplier ledger.
+- Purchase history.
+- Outstanding payments.
+- Supplier performance.
+- Quality performance.
+- Delivery performance.
+- Supplier comparison.
+
+## 4.5 Customer Management
+
+Customer fields:
+
+- Customer code.
+- Company name.
+- Contact person.
+- Phone.
+- Email.
+- GSTIN.
+- PAN.
+- Billing address.
+- Shipping address.
+- State.
+- Credit limit.
+- Payment terms.
+- Customer category.
+
+Features:
+
+- Customer ledger.
+- Sales history.
+- Outstanding balance.
+- Payment history.
+- Credit limit alerts.
+
+## 4.6 Other Master Data
+
+Create master modules for:
+
+- Warehouses.
+- Storage bins.
+- Departments.
+- Production lines.
+- Work centers.
+- Machines.
+- Operators.
+- Shifts.
+- Routes.
+- Tax rates.
+- Payment terms.
+- Reasons for rejection.
+- Reasons for downtime.
+- Scrap categories.
+- Quality parameters.
+- Document categories.
+- Expense categories.
+
+---
+
+# 5. INVENTORY AND WAREHOUSE MANAGEMENT
+
+Build a complete inventory management system.
+
+Inventory must be connected to procurement, manufacturing, sales, quality control, and accounting.
+
+## 5.1 Warehouse Management
+
+Features:
+
+- Multiple warehouses.
+- Warehouse locations.
+- Rack management.
+- Bin management.
+- Zone management.
+- Warehouse capacity.
+- Warehouse transfers.
+- Stock availability.
+- Reserved stock.
+- Quarantined stock.
+- Damaged stock.
+- Rejected stock.
+- Available-to-promise stock.
+
+Warehouse structure:
+
+Company → Factory → Warehouse → Zone → Rack → Bin.
+
+## 5.2 Stock Management
+
+Track:
+
+- Opening stock.
+- Purchase receipts.
+- Material issues.
+- Material returns.
+- Production consumption.
+- Production receipts.
+- Sales dispatch.
+- Customer returns.
+- Supplier returns.
+- Warehouse transfers.
+- Stock adjustments.
+- Scrap generation.
+- Stock write-offs.
+
+Maintain a detailed stock ledger.
+
+Each stock movement must record:
+
+- Product.
+- Quantity.
+- UOM.
+- Source warehouse.
+- Destination warehouse.
+- Batch number.
+- Serial number.
+- Reference document.
+- Transaction date.
+- User.
+- Movement reason.
+- Valuation impact.
+
+Do not directly overwrite inventory quantities.
+
+Use transaction-based stock ledger entries as the source of truth. Maintain stock balances as derived or transactionally updated summaries.
+
+## 5.3 Inventory Valuation
+
+Support configurable costing methods:
+
+- FIFO.
+- Moving Weighted Average.
+- Standard Cost.
+
+Implement the chosen costing policy consistently across stock issues, receipts, production consumption, and finished goods.
+
+Prevent accidental changes to historical valuation.
+
+## 5.4 Batch and Lot Management
+
+Features:
+
+- Batch number generation.
+- Manufacturing date.
+- Expiry date.
+- Supplier batch number.
+- Internal batch number.
+- Batch quantity.
+- Batch cost.
+- Batch status.
+- Batch location.
+- Batch quality status.
+
+Allow batch-wise stock traceability.
+
+## 5.5 Serial Number Management
+
+For products requiring individual identification:
+
+- Serial number generation.
+- Serial number assignment.
+- Purchase tracking.
+- Production tracking.
+- Warehouse tracking.
+- Sales tracking.
+- Warranty information.
+- Customer assignment.
+
+## 5.6 Stock Transfer
+
+Workflow:
+
+1. Create transfer request.
+2. Select source warehouse.
+3. Select destination warehouse.
+4. Select products and quantities.
+5. Submit for approval if required.
+6. Issue stock.
+7. Receive stock.
+8. Complete transfer.
+
+Support partial receipts and discrepancies.
+
+## 5.7 Stock Reconciliation
+
+Features:
+
+- Physical stock count.
+- System stock comparison.
+- Variance report.
+- Stock adjustment.
+- Approval workflow.
+- Audit trail.
+
+## 5.8 Inventory Alerts
+
+Generate alerts for:
+
+- Low stock.
+- Reorder level.
+- Expiring batches.
+- Expired materials.
+- Overstock.
+- Slow-moving inventory.
+- Non-moving inventory.
+- Negative stock attempts.
+
+---
+
+# 6. PROCUREMENT AND PURCHASE MANAGEMENT
+
+Build an end-to-end purchase management module.
+
+## 6.1 Purchase Requisition
+
+A department or production manager can request materials.
+
+Fields:
+
+- Requisition number.
+- Department.
+- Requesting user.
+- Required date.
+- Product.
+- Required quantity.
+- UOM.
+- Reason.
+- Production order reference.
+- Priority.
+- Status.
+
+Workflow:
+
+Draft → Submitted → Approved → Converted to RFQ or Purchase Order.
+
+## 6.2 Request for Quotation (RFQ)
+
+Features:
+
+- Create RFQ.
+- Select suppliers.
+- Add requested items.
+- Set quotation deadline.
+- Send supplier requests.
+- Record supplier quotations.
+- Compare prices.
+- Compare delivery time.
+- Compare payment terms.
+- Compare quality ratings.
+- Select winning supplier.
+
+## 6.3 Purchase Order
+
+Fields:
+
+- PO number.
+- Supplier.
+- PO date.
+- Delivery date.
+- Warehouse.
+- Items.
+- Quantities.
+- Rates.
+- Discounts.
+- GST.
+- Freight.
+- Other charges.
+- Total amount.
+- Payment terms.
+- Terms and conditions.
+
+Features:
+
+- PO approval.
+- PDF generation.
+- Email-ready document.
+- Partial deliveries.
+- Purchase order amendments.
+- Cancellation.
+- Outstanding PO tracking.
+
+## 6.4 Goods Receipt Note (GRN)
+
+When materials arrive:
+
+1. Select purchase order.
+2. Verify received quantity.
+3. Record rejected quantity.
+4. Record accepted quantity.
+5. Record shortages.
+6. Record damaged materials.
+7. Capture batch and expiry information.
+8. Generate GRN.
+9. Move accepted materials into inventory.
+10. Move rejected materials into quarantine or rejection stock.
+
+Support partial GRNs.
+
+## 6.5 Purchase Invoice
+
+Features:
+
+- Supplier invoice entry.
+- Purchase order reference.
+- GRN reference.
+- Tax calculation.
+- Freight.
+- Other charges.
+- Invoice attachment.
+- Duplicate invoice validation.
+- Payment status.
+
+Support three-way matching:
+
+Purchase Order ↔ Goods Receipt ↔ Supplier Invoice.
+
+Flag quantity and price discrepancies.
+
+## 6.6 Purchase Returns
+
+Features:
+
+- Return to supplier.
+- Return reason.
+- Return quantity.
+- Batch reference.
+- Debit note.
+- Refund or supplier adjustment.
+
+## 6.7 Supplier Payments
+
+- Advance payments.
+- Partial payments.
+- Full payments.
+- Payment allocation.
+- Due date tracking.
+- Outstanding balances.
+- Payment receipts.
+
+---
+
+# 7. BILL OF MATERIALS (BOM) MANAGEMENT
+
+This is one of the most important manufacturing modules.
+
+Build a complete BOM system.
+
+## 7.1 BOM Creation
+
+A BOM defines all materials and operations required to manufacture a product.
+
+Fields:
+
+- BOM number.
+- Finished product.
+- Product variant.
+- BOM version.
+- Revision number.
+- Production quantity.
+- UOM.
+- Effective date.
+- Expiry date.
+- Status.
+- Approval status.
+- Estimated production cost.
+
+BOM components:
+
+- Raw material.
+- Semi-finished product.
+- Packaging material.
+- Consumable.
+- By-product.
+
+Component fields:
+
+- Product.
+- Required quantity.
+- UOM.
+- Expected wastage percentage.
+- Scrap allowance.
+- Issue warehouse.
+- Operation reference.
+- Remarks.
+
+## 7.2 Multi-Level BOM
+
+Support nested BOM structures.
+
+Example:
+
+Final Product: Wooden Office Table.
+
+BOM:
+
+- Wooden Table Top.
+- Metal Legs.
+- Screws.
+- Paint.
+- Packaging Material.
+
+Wooden Table Top may have its own BOM:
+
+- Plywood.
+- Laminate.
+- Adhesive.
+- Edge Band.
+
+The system must calculate total material requirements recursively.
+
+## 7.3 BOM Versioning
+
+Support:
+
+- Version 1.
+- Version 2.
+- Version 3.
+- Revision history.
+- Effective dates.
+- Approval workflow.
+- Change reasons.
+
+Never modify an approved BOM in a way that changes historical production orders.
+
+## 7.4 BOM Cost Calculation
+
+Calculate:
+
+- Raw material cost.
+- Component cost.
+- Consumables cost.
+- Labour cost.
+- Machine cost.
+- Overhead.
+- Expected wastage.
+- Packaging cost.
+- Total estimated manufacturing cost.
+- Cost per finished unit.
+
+Provide a BOM cost comparison report.
+
+## 7.5 BOM Explosion
+
+Given a target quantity of finished goods, calculate the complete raw material requirement.
+
+Example:
+
+To manufacture 1,000 tables, calculate:
+
+- Plywood required.
+- Metal required.
+- Screws required.
+- Paint required.
+- Packaging required.
+
+Include UOM conversions and configured wastage.
+
+---
+
+# 8. ROUTING AND WORK CENTER MANAGEMENT
+
+Manufacturing requires an organized sequence of operations.
+
+## 8.1 Work Centers
+
+Manage:
+
+- Work center code.
+- Work center name.
+- Factory.
+- Department.
+- Production line.
+- Machine assignment.
+- Capacity.
+- Cost per hour.
+- Working hours.
+- Shift availability.
+- Efficiency.
+- Status.
+
+Examples:
+
+- Cutting.
+- Welding.
+- Assembly.
+- Painting.
+- Polishing.
+- Packaging.
+- Quality Inspection.
+
+## 8.2 Routing Management
+
+Define the manufacturing sequence.
+
+Example:
+
+Raw Material → Cutting → Welding → Grinding → Painting → Assembly → Quality Inspection → Packaging.
+
+Each routing operation must contain:
+
+- Operation name.
+- Sequence number.
+- Work center.
+- Setup time.
+- Processing time.
+- Labour requirements.
+- Machine requirements.
+- Expected output.
+- Quality inspection requirement.
+- Operation instructions.
+
+## 8.3 Operation Dependencies
+
+Support:
+
+- Sequential operations.
+- Parallel operations where applicable.
+- Alternative work centers.
+- Operation dependencies.
+- Rework operations.
+- Outsourced operations.
+
+## 8.4 Capacity Planning
+
+Calculate:
+
+- Available machine hours.
+- Available labour hours.
+- Planned production hours.
+- Scheduled load.
+- Machine utilization.
+- Work center utilization.
+- Bottlenecks.
+
+Flag overloaded work centers.
+
+---
+
+# 9. PRODUCTION PLANNING AND MRP
+
+Develop a complete Material Requirements Planning module.
+
+## 9.1 Production Planning
+
+Create production plans based on:
+
+- Sales orders.
+- Forecast demand.
+- Minimum stock levels.
+- Reorder levels.
+- Manual production requests.
+- Safety stock.
+
+Production plan fields:
+
+- Plan number.
+- Planning period.
+- Finished product.
+- Planned quantity.
+- Required date.
+- Priority.
+- Warehouse.
+- Status.
+
+## 9.2 Demand Planning
+
+Calculate:
+
+- Current demand.
+- Confirmed sales orders.
+- Forecast demand.
+- Available inventory.
+- Reserved inventory.
+- Open purchase orders.
+- Open production orders.
+- Net material requirement.
+
+## 9.3 Material Requirements Planning
+
+Implement MRP calculations.
+
+For every required material:
+
+Net Requirement = Gross Requirement − Available Stock − Confirmed Incoming Supply + Allocated Demand, subject to configured stock and reservation rules.
+
+Consider:
+
+- BOM quantities.
+- Multi-level BOM.
+- Wastage.
+- Lead time.
+- Safety stock.
+- Existing inventory.
+- Open purchase orders.
+- Existing work orders.
+- Minimum order quantities.
+- Supplier lead times.
+
+MRP should recommend:
+
+- Purchase requisitions.
+- Production orders.
+- Material transfers.
+- Rescheduling of incoming supply.
+
+Do not automatically create purchase orders without an authorized confirmation.
+
+## 9.4 Production Scheduling
+
+Support:
+
+- Daily scheduling.
+- Weekly scheduling.
+- Monthly scheduling.
+- Work center scheduling.
+- Machine scheduling.
+- Shift scheduling.
+- Priority-based scheduling.
+- Delivery-date scheduling.
+
+Provide a visual production calendar.
+
+---
+
+# 10. WORK ORDER AND MANUFACTURING EXECUTION
+
+This is the central operational module.
+
+## 10.1 Work Order Creation
+
+A work order must contain:
+
+- Work order number.
+- Finished product.
+- BOM version.
+- Routing version.
+- Planned quantity.
+- Start date.
+- Expected completion date.
+- Factory.
+- Production line.
+- Warehouse.
+- Priority.
+- Sales order reference.
+- Production plan reference.
+- Assigned supervisor.
+- Status.
+
+## 10.2 Work Order Workflow
+
+Implement the following lifecycle:
+
+Draft → Pending Approval → Approved → Material Availability Check → Material Reserved → Released → In Progress → Quality Inspection → Completed → Closed.
+
+Allow controlled states for:
+
+- On Hold.
+- Cancelled.
+- Rework Required.
+- Partially Completed.
+
+Every status transition must be validated and logged.
+
+## 10.3 Material Availability Check
+
+Before releasing a work order:
+
+- Calculate total material requirement.
+- Check available stock.
+- Check reserved stock.
+- Check batch status.
+- Check expiry.
+- Identify shortages.
+- Identify materials under quality hold.
+
+Show:
+
+- Available quantity.
+- Required quantity.
+- Shortage quantity.
+- Warehouse.
+- Suggested procurement action.
+
+## 10.4 Material Reservation
+
+Reserve materials for approved work orders.
+
+Support:
+
+- Warehouse selection.
+- Batch selection.
+- FEFO or FIFO picking rules where applicable.
+- Reservation cancellation.
+- Partial reservations.
+
+Do not double-reserve the same stock.
+
+## 10.5 Material Issue
+
+Create Material Issue Notes.
+
+Features:
+
+- Issue against work order.
+- Issue against operation.
+- Batch selection.
+- Serial number selection.
+- Quantity validation.
+- Partial issue.
+- Additional material issue.
+- Material return.
+- Material consumption tracking.
+
+## 10.6 Production Recording
+
+Operators or supervisors can record:
+
+- Produced quantity.
+- Accepted quantity.
+- Rejected quantity.
+- Rework quantity.
+- Scrap quantity.
+- Production date.
+- Shift.
+- Work center.
+- Machine.
+- Operator.
+- Start time.
+- End time.
+- Downtime.
+- Production remarks.
+
+Support partial production reporting.
+
+## 10.7 Operation Tracking
+
+Each production operation must track:
+
+- Planned quantity.
+- Started quantity.
+- Completed quantity.
+- Accepted quantity.
+- Rejected quantity.
+- Remaining quantity.
+- Start time.
+- Completion time.
+- Assigned operator.
+- Assigned machine.
+- Operation status.
+
+## 10.8 Production Completion
+
+After successful completion:
+
+1. Verify material consumption.
+2. Verify production quantity.
+3. Verify rejection and scrap.
+4. Complete required quality checks.
+5. Calculate manufacturing cost.
+6. Generate finished goods receipt.
+7. Update finished goods inventory.
+8. Update WIP inventory.
+9. Close completed operations.
+
+Support partial completion and multiple production receipts.
+
+---
+
+# 11. QUALITY CONTROL AND QUALITY ASSURANCE
+
+Build a complete quality management module.
+
+## 11.1 Quality Inspection Templates
+
+Create configurable templates for:
+
+- Raw materials.
+- Incoming materials.
+- In-process production.
+- Finished goods.
+- Packaging.
+- Supplier quality.
+- Customer returns.
+
+Parameters can include:
+
+- Dimensions.
+- Weight.
+- Length.
+- Width.
+- Thickness.
+- Color.
+- Temperature.
+- Moisture.
+- Strength.
+- Chemical composition.
+- Visual defects.
+
+Each parameter should support:
+
+- Parameter name.
+- Measurement unit.
+- Minimum value.
+- Maximum value.
+- Target value.
+- Inspection method.
+- Mandatory status.
+
+## 11.2 Incoming Quality Inspection
+
+When GRN is created:
+
+- Generate inspection request.
+- Assign inspector.
+- Record test results.
+- Compare with specifications.
+- Accept.
+- Reject.
+- Quarantine.
+- Request reinspection.
+
+## 11.3 In-Process Quality Control
+
+Allow quality checks at selected routing operations.
+
+Record:
+
+- Work order.
+- Operation.
+- Batch.
+- Sample quantity.
+- Test results.
+- Inspector.
+- Date.
+- Pass/fail status.
+
+## 11.4 Finished Goods Quality Control
+
+Before finished goods become available for sale:
+
+- Generate inspection.
+- Perform tests.
+- Record results.
+- Approve or reject.
+- Release or quarantine stock.
+
+## 11.5 Non-Conformance Management
+
+Create non-conformance reports for:
+
+- Raw material defects.
+- Production defects.
+- Machine defects.
+- Packaging defects.
+- Supplier issues.
+- Customer complaints.
+
+Features:
+
+- Defect classification.
+- Root cause.
+- Corrective action.
+- Preventive action.
+- Responsible person.
+- Target resolution date.
+- Verification.
+- Closure.
+
+## 11.6 Traceability
+
+Support forward and backward traceability.
+
+Backward:
+
+Finished Product → Production Order → Consumed Raw Materials → Supplier → GRN.
+
+Forward:
+
+Raw Material Batch → Production Orders → Finished Goods Batches → Sales Orders → Customers.
+
+Support batch recall reports.
+
+---
+
+# 12. MACHINE AND MAINTENANCE MANAGEMENT
+
+## 12.1 Machine Register
+
+Fields:
+
+- Machine code.
+- Machine name.
+- Manufacturer.
+- Model.
+- Serial number.
+- Purchase date.
+- Installation date.
+- Warranty.
+- Department.
+- Work center.
+- Capacity.
+- Operating cost.
+- Status.
+
+## 12.2 Preventive Maintenance
+
+Features:
+
+- Maintenance schedules.
+- Daily checklists.
+- Weekly maintenance.
+- Monthly maintenance.
+- Annual maintenance.
+- Maintenance reminders.
+- Maintenance history.
+
+## 12.3 Breakdown Management
+
+Record:
+
+- Machine.
+- Breakdown date.
+- Breakdown time.
+- Problem description.
+- Downtime.
+- Root cause.
+- Assigned technician.
+- Repair details.
+- Spare parts used.
+- Repair cost.
+- Restoration time.
+
+## 12.4 Maintenance Analytics
+
+Calculate:
+
+- Machine utilization.
+- Machine availability.
+- Downtime.
+- MTBF.
+- MTTR.
+- Maintenance cost.
+- Breakdown frequency.
+
+---
+
+# 13. SUBCONTRACTING AND JOB WORK MANAGEMENT
+
+Support outsourced manufacturing processes.
+
+Examples:
+
+- External painting.
+- Fabrication.
+- Machining.
+- Embroidery.
+- Packaging.
+- Component processing.
+
+Features:
+
+- Subcontractor management.
+- Job work order.
+- Material sent to subcontractor.
+- Delivery challan.
+- Quantity tracking.
+- Material consumption.
+- Finished component receipt.
+- Rejected material.
+- Scrap return.
+- Subcontractor invoice.
+- Job work charges.
+- Outstanding material tracking.
+
+Maintain a clear record of company-owned inventory held by subcontractors.
+
+Support Indian GST job-work documentation and integration-ready e-way bill workflows where applicable.
+
+---
+
+# 14. SALES AND CUSTOMER ORDER MANAGEMENT
+
+## 14.1 Sales Enquiries
+
+- Customer enquiry.
+- Product requirements.
+- Quantity.
+- Expected delivery.
+- Notes.
+- Salesperson assignment.
+
+## 14.2 Sales Quotations
+
+- Quotation number.
+- Customer.
+- Products.
+- Quantities.
+- Pricing.
+- Discounts.
+- GST.
+- Delivery terms.
+- Payment terms.
+- Validity date.
+- PDF generation.
+
+## 14.3 Sales Orders
+
+- Sales order number.
+- Customer.
+- Products.
+- Quantity.
+- Unit price.
+- Delivery date.
+- Warehouse.
+- Payment terms.
+- Production requirement.
+- Order status.
+
+Support:
+
+- Make-to-Stock.
+- Make-to-Order.
+- Assemble-to-Order where applicable.
+
+## 14.4 Order Fulfilment
+
+Track:
+
+- Ordered quantity.
+- Produced quantity.
+- Reserved quantity.
+- Dispatched quantity.
+- Pending quantity.
+- Delivered quantity.
+
+Allow production orders to be linked to sales orders.
+
+## 14.5 Delivery and Dispatch
+
+Features:
+
+- Delivery challan.
+- Dispatch request.
+- Packing list.
+- Vehicle details.
+- Transporter details.
+- LR number.
+- Tracking reference.
+- Delivery status.
+- Proof of delivery.
+- Partial dispatch.
+
+## 14.6 Sales Invoice
+
+Generate GST-ready sales invoices with:
+
+- Invoice number.
+- Invoice date.
+- Customer.
+- Billing address.
+- Shipping address.
+- Product details.
+- HSN.
+- Quantity.
+- Rate.
+- Discount.
+- Taxable value.
+- CGST.
+- SGST.
+- IGST.
+- Freight.
+- Total.
+- Payment status.
+
+Support configurable tax rules and applicable credit/debit notes.
+
+---
+
+# 15. FINANCE AND ACCOUNTING MANAGEMENT
+
+Build an integrated financial accounting module.
+
+Do not limit finance to income and expense CRUD operations.
+
+Implement double-entry accounting with balanced journal entries.
+
+## 15.1 Chart of Accounts
+
+Create account categories:
+
+- Assets.
+- Liabilities.
+- Equity.
+- Revenue.
+- Direct Expenses.
+- Indirect Expenses.
+- Cost of Goods Sold.
+- Work in Progress.
+- Raw Material Inventory.
+- Finished Goods Inventory.
+- Accounts Receivable.
+- Accounts Payable.
+- Bank.
+- Cash.
+
+Allow configurable account codes and hierarchy.
+
+## 15.2 Journal Entries
+
+Features:
+
+- Journal entry creation.
+- Debit and credit.
+- Journal references.
+- Approval.
+- Posting.
+- Reversal.
+- Audit history.
+
+Enforce:
+
+Total Debit = Total Credit.
+
+Posted journals must not be silently edited or deleted. Use controlled reversal and correction entries.
+
+## 15.3 Accounts Receivable
+
+- Customer invoices.
+- Customer receipts.
+- Credit notes.
+- Outstanding invoices.
+- Ageing analysis.
+- Customer ledger.
+- Payment allocation.
+
+## 15.4 Accounts Payable
+
+- Supplier invoices.
+- Supplier payments.
+- Debit notes.
+- Outstanding bills.
+- Ageing analysis.
+- Supplier ledger.
+
+## 15.5 Manufacturing Cost Accounting
+
+Calculate:
+
+- Direct material cost.
+- Direct labour cost.
+- Machine cost.
+- Production overhead.
+- Subcontracting charges.
+- Packaging costs.
+- Scrap recovery.
+- Rework costs.
+- Actual production cost.
+- Standard production cost.
+- Cost variance.
+
+Support WIP accounting and finished goods valuation.
+
+Clearly separate estimated BOM costs from actual posted manufacturing costs.
+
+## 15.6 Financial Reports
+
+- Profit and Loss.
+- Balance Sheet.
+- Trial Balance.
+- Cash Flow.
+- General Ledger.
+- Customer Ledger.
+- Supplier Ledger.
+- Accounts Receivable.
+- Accounts Payable.
+- Inventory Valuation.
+- WIP Valuation.
+- Manufacturing Cost Report.
+- Cost Variance Report.
+
+## 15.7 Indian Tax and Compliance
+
+Support configurable Indian business tax requirements:
+
+- GSTIN.
+- CGST.
+- SGST.
+- IGST.
+- HSN.
+- SAC.
+- Input Tax Credit recording.
+- Purchase tax.
+- Sales tax.
+- TDS where applicable.
+- GST returns data exports.
+- E-invoice integration-ready architecture.
+- E-way bill integration-ready architecture.
+
+Do not claim statutory compliance merely because invoices contain GST fields. Implement the relevant validations, document structures, configuration, and integration points. Allow an accountant to verify tax treatment.
+
+---
+
+# 16. HUMAN RESOURCE AND WORKFORCE MANAGEMENT
+
+Create an optional but integrated workforce module.
+
+## 16.1 Employee Management
+
+- Employee profile.
+- Employee code.
+- Department.
+- Designation.
+- Contact information.
+- Joining date.
+- Salary information.
+- Documents.
+- Employment status.
+
+## 16.2 Attendance
+
+- Daily attendance.
+- Shift-based attendance.
+- In-time.
+- Out-time.
+- Overtime.
+- Leave.
+- Attendance reports.
+
+## 16.3 Shift Management
+
+- Shift creation.
+- Shift timings.
+- Weekly off.
+- Shift assignment.
+- Operator allocation.
+
+## 16.4 Labour Costing
+
+Capture direct labour hours against:
+
+- Work orders.
+- Operations.
+- Work centers.
+- Departments.
+
+Calculate labour cost using configurable rates.
+
+Payroll should be an optional module, with statutory payroll processing treated as a separately configurable scope.
+
+---
+
+# 17. DOCUMENT MANAGEMENT
+
+Create a centralized document repository.
+
+Support attachments for:
+
+- Products.
+- Suppliers.
+- Customers.
+- Purchase orders.
+- GRNs.
+- BOMs.
+- Work orders.
+- Quality inspections.
+- Machines.
+- Maintenance records.
+- Sales orders.
+- Invoices.
+- Contracts.
+- Compliance records.
+
+Features:
+
+- Document upload.
+- File categories.
+- Versioning where required.
+- Access permissions.
+- Download.
+- Document expiry alerts.
+- Audit history.
+
+Securely validate file types and file sizes.
+
+---
+
+# 18. DASHBOARD AND BUSINESS INTELLIGENCE
+
+Build separate dashboards based on user roles.
+
+## 18.1 Executive Dashboard
+
+Display:
+
+- Total sales.
+- Total purchases.
+- Revenue.
+- Expenses.
+- Gross profit.
+- Net profit.
+- Inventory value.
+- Raw material value.
+- Finished goods value.
+- WIP value.
+- Pending orders.
+- Production efficiency.
+- Order fulfilment rate.
+- Customer outstanding.
+- Supplier outstanding.
+
+## 18.2 Production Dashboard
+
+Display:
+
+- Today's production target.
+- Actual production.
+- Production achievement.
+- Active work orders.
+- Delayed work orders.
+- Pending operations.
+- Rejected quantity.
+- Scrap quantity.
+- Machine downtime.
+- Work center utilization.
+- Material shortages.
+
+## 18.3 Inventory Dashboard
+
+Display:
+
+- Total SKUs.
+- Total inventory value.
+- Raw material stock.
+- Finished goods stock.
+- Low stock products.
+- Expiring batches.
+- Quarantined stock.
+- Dead stock.
+- Warehouse-wise inventory.
+
+## 18.4 Procurement Dashboard
+
+Display:
+
+- Pending requisitions.
+- Pending approvals.
+- Open purchase orders.
+- Pending GRNs.
+- Supplier delivery performance.
+- Purchase value.
+- Purchase price variations.
+
+## 18.5 Quality Dashboard
+
+Display:
+
+- Inspections pending.
+- Inspection pass rate.
+- Rejection rate.
+- Defect categories.
+- Supplier rejection rate.
+- Open non-conformances.
+- Corrective action status.
+
+## 18.6 Financial Dashboard
+
+Display:
+
+- Revenue.
+- Expenses.
+- Gross margin.
+- Net profit.
+- Cash and bank balance.
+- Receivables.
+- Payables.
+- Overdue invoices.
+- Manufacturing cost trends.
+
+All KPIs must be calculated using actual database records.
+
+Do not use hardcoded dashboard numbers.
+
+---
+
+# 19. ADVANCED MANUFACTURING FEATURES
+
+Design the architecture to support these advanced capabilities:
+
+## 19.1 Production Efficiency
+
+Calculate:
+
+- Planned production.
+- Actual production.
+- Rejected quantity.
+- Downtime.
+- Production cycle time.
+- Target achievement.
+
+## 19.2 OEE (Overall Equipment Effectiveness)
+
+Calculate:
+
+Availability × Performance × Quality.
+
+Provide:
+- Machine-level OEE.
+- Work center OEE.
+- Production-line OEE.
+- Daily OEE.
+- Monthly OEE.
+
+Document the formulas and data assumptions used.
+
+## 19.3 Production Variance
+
+Compare:
+
+- Planned quantity vs actual quantity.
+- Standard material vs actual material.
+- Standard labour vs actual labour.
+- Planned machine time vs actual machine time.
+- Standard cost vs actual cost.
+
+## 19.4 Production Waste Management
+
+Track:
+
+- Normal wastage.
+- Abnormal wastage.
+- Process scrap.
+- Rejected material.
+- Recoverable scrap.
+- Non-recoverable waste.
+
+Allow scrap to be sold, reused, or disposed of.
+
+## 19.5 Product Traceability
+
+Provide a complete product genealogy.
+
+An authorized user should be able to select any finished goods batch and discover:
+
+- Production order.
+- BOM version.
+- Raw material batches.
+- Supplier.
+- GRN.
+- Quality inspections.
+- Manufacturing operations.
+- Machine.
+- Operator.
+- Dispatch document.
+- Customer.
+
+## 19.6 Barcode and QR Code
+
+Support:
+
+- Product barcode.
+- Batch barcode.
+- Warehouse location QR.
+- GRN barcode.
+- Work order QR.
+- Finished goods label.
+- Stock transfer barcode.
+
+Provide printable label templates.
+
+## 19.7 Import and Export
+
+Allow Excel/CSV import and export for:
+
+- Products.
+- Customers.
+- Suppliers.
+- Opening stock.
+- BOM.
+- Purchase data.
+- Sales data.
+- Employees.
+
+Validate imports before committing data. Provide row-wise error reports and safe duplicate handling.
+
+---
+
+# 20. NOTIFICATION AND COMMUNICATION SYSTEM
+
+Implement a centralized notification module.
+
+Notification events:
+
+- Purchase requisition submitted.
+- Purchase order approval pending.
+- Purchase order approved.
+- GRN pending.
+- Material shortage.
+- Low stock.
+- Expiry alert.
+- Work order assigned.
+- Production delayed.
+- Quality inspection failed.
+- Machine breakdown.
+- Maintenance due.
+- Sales order received.
+- Customer payment overdue.
+- Supplier payment due.
+
+Support:
+
+- In-app notifications.
+- Email notifications.
+- SMS integration-ready architecture.
+- WhatsApp Business API integration-ready architecture.
+
+Allow notification preferences by role and user.
+
+Use queued notifications for external services.
+
+---
+
+# 21. REPORTING SYSTEM
+
+Build a comprehensive reporting center.
+
+Reports must support:
+
+- Date range.
+- Company.
+- Factory.
+- Branch.
+- Warehouse.
+- Product.
+- Category.
+- Supplier.
+- Customer.
+- Work center.
+- Production order.
+- Batch.
+- Status.
+
+## Inventory Reports
+
+1. Stock Summary.
+2. Stock Ledger.
+3. Stock Valuation.
+4. Warehouse-wise Stock.
+5. Batch-wise Stock.
+6. Serial Number Report.
+7. Stock Ageing.
+8. Expiry Report.
+9. Low Stock Report.
+10. Reorder Report.
+11. Slow Moving Stock.
+12. Non Moving Stock.
+13. Stock Movement.
+14. Stock Adjustment.
+15. Stock Reconciliation.
+
+## Procurement Reports
+
+1. Purchase Register.
+2. Supplier-wise Purchase.
+3. Purchase Order Status.
+4. Pending Purchase Orders.
+5. GRN Register.
+6. Purchase Return Report.
+7. Supplier Payment Report.
+8. Supplier Performance.
+9. Purchase Price Variance.
+10. Material Procurement Lead Time.
+
+## Manufacturing Reports
+
+1. Production Register.
+2. Work Order Status.
+3. Production Planning.
+4. Material Consumption.
+5. BOM Costing.
+6. Production Costing.
+7. Work Center Utilization.
+8. Machine Utilization.
+9. Production Efficiency.
+10. Production Variance.
+11. Rejection Report.
+12. Scrap Report.
+13. WIP Report.
+14. Production Delay Report.
+15. Batch Traceability.
+16. OEE Report.
+17. Labour Productivity.
+18. Manufacturing Profitability.
+
+## Quality Reports
+
+1. Incoming Quality Report.
+2. In-process Inspection.
+3. Finished Goods Inspection.
+4. Rejection Report.
+5. Supplier Quality Report.
+6. Non-conformance Report.
+7. Corrective Action Report.
+8. Batch Recall Report.
+
+## Sales Reports
+
+1. Sales Register.
+2. Customer-wise Sales.
+3. Product-wise Sales.
+4. Sales Order Status.
+5. Pending Deliveries.
+6. Customer Outstanding.
+7. Sales Return.
+8. Gross Margin.
+9. Order Fulfilment.
+
+## Financial Reports
+
+1. Profit and Loss.
+2. Balance Sheet.
+3. Trial Balance.
+4. Cash Flow.
+5. General Ledger.
+6. Accounts Receivable.
+7. Accounts Payable.
+8. Expense Report.
+9. Tax Report.
+10. Cost of Goods Sold.
+11. Inventory Valuation.
+12. Manufacturing Cost Report.
+
+All reports must support PDF, Excel and CSV exports.
+
+---
+
+# 22. DATABASE ARCHITECTURE
+
+Use MySQL with a normalized relational database.
+
+Design database tables carefully before development.
+
+Use:
+- Primary keys.
+- Foreign keys.
+- Composite indexes where useful.
+- Unique constraints.
+- Appropriate decimal precision.
+- Transactions.
+- Soft deletes where appropriate.
+- Timestamps.
+- Audit records.
+- Status fields.
+- Company and branch ownership.
+
+Use `DECIMAL` rather than floating-point values for financial amounts and quantities requiring precision.
+
+Never use floating-point arithmetic for financial calculations.
+
+## 22.1 Core Tables
+
+- companies
+- branches
+- factories
+- departments
+- users
+- roles
+- permissions
+- employees
+- user_branches
+- user_warehouses
+- approval_workflows
+- approval_requests
+- activity_logs
+- notification_preferences
+
+## 22.2 Product Tables
+
+- products
+- product_categories
+- product_attributes
+- product_attribute_values
+- product_variants
+- brands
+- units
+- unit_conversions
+- product_units
+- product_documents
+- product_tax_profiles
+
+## 22.3 Supplier and Customer Tables
+
+- suppliers
+- supplier_contacts
+- supplier_addresses
+- supplier_documents
+- customers
+- customer_contacts
+- customer_addresses
+- customer_documents
+
+## 22.4 Inventory Tables
+
+- warehouses
+- warehouse_zones
+- warehouse_racks
+- warehouse_bins
+- stock_ledger
+- stock_balances
+- stock_reservations
+- stock_transfers
+- stock_transfer_items
+- stock_adjustments
+- stock_adjustment_items
+- inventory_batches
+- inventory_serial_numbers
+- stock_counts
+- stock_count_items
+- stock_valuation_layers
+
+## 22.5 Procurement Tables
+
+- purchase_requisitions
+- purchase_requisition_items
+- rfqs
+- rfq_suppliers
+- supplier_quotations
+- supplier_quotation_items
+- purchase_orders
+- purchase_order_items
+- goods_receipts
+- goods_receipt_items
+- purchase_invoices
+- purchase_invoice_items
+- purchase_returns
+- purchase_return_items
+- supplier_payments
+
+## 22.6 BOM and Routing Tables
+
+- bom_headers
+- bom_versions
+- bom_components
+- bom_operations
+- routings
+- routing_operations
+- work_centers
+- work_center_capacities
+- machines
+- machine_work_centers
+- operation_dependencies
+
+## 22.7 Production Tables
+
+- production_plans
+- production_plan_items
+- mrp_runs
+- mrp_recommendations
+- work_orders
+- work_order_items
+- work_order_operations
+- material_reservations
+- material_issues
+- material_issue_items
+- material_returns
+- material_return_items
+- production_entries
+- production_entry_items
+- production_receipts
+- production_receipt_items
+- production_scrap
+- production_rejections
+- wip_transactions
+
+## 22.8 Quality Tables
+
+- quality_templates
+- quality_template_parameters
+- quality_inspections
+- quality_inspection_results
+- non_conformance_reports
+- corrective_actions
+- preventive_actions
+- batch_traceability
+
+## 22.9 Maintenance Tables
+
+- maintenance_schedules
+- maintenance_requests
+- maintenance_work_orders
+- machine_breakdowns
+- machine_downtime
+- maintenance_spare_parts
+
+## 22.10 Sales Tables
+
+- sales_enquiries
+- sales_quotations
+- sales_quotation_items
+- sales_orders
+- sales_order_items
+- delivery_notes
+- delivery_note_items
+- sales_invoices
+- sales_invoice_items
+- sales_returns
+- customer_payments
+
+## 22.11 Finance Tables
+
+- chart_of_accounts
+- journal_entries
+- journal_entry_lines
+- accounting_periods
+- fiscal_years
+- tax_rates
+- payment_methods
+- bank_accounts
+- cash_accounts
+- cost_centers
+- expense_categories
+- expenses
+- expense_items
+- account_reconciliations
+
+## 22.12 Subcontracting Tables
+
+- subcontractors
+- subcontract_orders
+- subcontract_order_items
+- subcontract_material_issues
+- subcontract_material_returns
+- subcontract_receipts
+- subcontract_invoices
+
+## 22.13 Document and Integration Tables
+
+- documents
+- document_versions
+- attachments
+- integration_settings
+- webhook_logs
+- import_jobs
+- export_jobs
+- system_settings
+
+These tables are a starting schema, not a requirement to create every table blindly. Normalize relationships, identify required join tables, and document the final schema before implementation.
+
+Add missing tables for payment allocations, invoice taxes, journal references, reservations, stock movement details, approval history, and other required relationships.
+
+---
+
+# 23. IMPORTANT BUSINESS LOGIC AND DATA INTEGRITY
+
+These rules are mandatory.
+
+## 23.1 Inventory Integrity
+
+1. Every stock movement must have a source document.
+2. Stock transactions must be recorded atomically.
+3. Stock must not be issued beyond available quantity unless explicitly configured and authorized.
+4. Batch-tracked products must preserve batch identity.
+5. Serial-tracked products must preserve individual serial identity.
+6. Reversed transactions must create corresponding reversal entries.
+7. Historical stock movements must not be silently deleted.
+8. Concurrent stock transactions must not cause overselling or double allocation.
+
+## 23.2 Manufacturing Integrity
+
+1. Every production order must reference an approved BOM version.
+2. Every production order must reference the relevant routing version.
+3. Material issues must be linked to a production order.
+4. Material returns must reduce actual consumption.
+5. Production output must not exceed authorized limits without an approved exception.
+6. Scrap and rejected goods must be separately recorded.
+7. Quality-held products must not become available for unrestricted sale.
+8. Production completion must account for WIP and finished goods.
+9. Historical production costs must remain traceable.
+
+## 23.3 Financial Integrity
+
+1. Every posted journal entry must balance.
+2. Every posted invoice must have a unique invoice number within its configured numbering scope.
+3. Payments must be allocated to valid invoices or recorded as advances.
+4. Tax must be calculated using configured rules.
+5. Financial transactions must be auditable.
+6. Posted transactions must be reversed through controlled entries.
+7. Closed accounting periods must prevent unauthorized backdated postings.
+
+## 23.4 Transaction Safety
+
+Use Laravel database transactions for critical operations.
+
+Use appropriate locking or atomic updates for:
+- Stock reservations.
+- Stock issues.
+- GRN posting.
+- Production receipts.
+- Invoice posting.
+- Payment allocation.
+- Journal posting.
+
+Avoid race conditions and duplicate posting.
+
+Implement idempotency controls for operations that could be retried by background jobs or API requests.
+
+---
+
+# 24. UI/UX DESIGN REQUIREMENTS
+
+Create a modern enterprise SaaS interface.
+
+The application must look like a premium commercial ERP.
+
+## Design Direction
+
+Use:
+- Clean white and light-gray surfaces.
+- Professional typography.
+- Subtle borders.
+- Consistent spacing.
+- Clear visual hierarchy.
+- Restrained accent colors.
+- Professional icons.
+- Data-rich tables.
+- Modern charts.
+- Responsive layouts.
+
+Avoid:
+- Excessive gradients.
+- Overloaded dashboards.
+- Large unnecessary cards.
+- Excessive colors.
+- Old-fashioned admin templates.
+- Inconsistent button styles.
+- Unnecessary animations.
+
+## Required Screens
+
+Create complete screens for:
+
+1. Login.
+2. Forgot Password.
+3. Main Dashboard.
+4. Product List.
+5. Product Details.
+6. Product Create/Edit.
+7. Supplier List.
+8. Supplier Details.
+9. Customer List.
+10. Customer Details.
+11. Warehouse List.
+12. Stock Overview.
+13. Stock Ledger.
+14. Stock Transfer.
+15. Purchase Requisition.
+16. RFQ.
+17. Purchase Order.
+18. GRN.
+19. Purchase Invoice.
+20. BOM List.
+21. BOM Builder.
+22. BOM Details.
+23. Routing Management.
+24. Work Center Management.
+25. Machine Management.
+26. Production Planning.
+27. MRP Dashboard.
+28. Work Order List.
+29. Work Order Details.
+30. Material Issue.
+31. Production Entry.
+32. Production Receipt.
+33. Quality Inspection.
+34. Non-Conformance.
+35. Maintenance Dashboard.
+36. Machine Breakdown.
+37. Sales Quotation.
+38. Sales Order.
+39. Delivery Challan.
+40. Sales Invoice.
+41. Accounting Dashboard.
+42. Journal Entries.
+43. Accounts Receivable.
+44. Accounts Payable.
+45. Financial Reports.
+46. Manufacturing Reports.
+47. User Management.
+48. Role Management.
+49. Approval Management.
+50. Company Settings.
+
+Every screen must have functional navigation and appropriate actions.
+
+## Table Requirements
+
+Every data listing must support:
+
+- Search.
+- Filters.
+- Sorting.
+- Pagination.
+- Column selection where useful.
+- Export.
+- Record actions.
+- Bulk actions where appropriate.
+- Status indicators.
+- Empty states.
+- Loading states.
+
+Forms must provide:
+- Clear labels.
+- Validation.
+- Required field indicators.
+- Helpful error messages.
+- Save and cancel actions.
+- Confirmation for destructive actions.
+
+---
+
+# 25. API AND MOBILE-READY ARCHITECTURE
+
+Design APIs for future mobile applications and external integrations.
+
+Potential API consumers:
+
+- Factory operator mobile app.
+- Warehouse scanning application.
+- Production supervisor app.
+- Salesperson app.
+- Customer portal.
+- Supplier portal.
+
+Provide APIs for:
+
+- Authentication.
+- Product lookup.
+- Stock lookup.
+- Barcode scanning.
+- GRN.
+- Material issue.
+- Production entry.
+- Quality inspection.
+- Work order status.
+- Sales order tracking.
+
+Implement API authentication, authorization, validation, rate limits, and versioning.
+
+---
+
+# 26. SYSTEM PERFORMANCE AND SCALABILITY
+
+The application must support growing manufacturing operations.
+
+Requirements:
+
+- Database indexing.
+- Efficient Eloquent queries.
+- Eager loading.
+- Pagination.
+- Queue processing.
+- Caching.
+- Background report generation.
+- Optimized file storage.
+- Scheduled notifications.
+- Database backups.
+- Error logging.
+
+Avoid N+1 queries.
+
+Do not load thousands of records into a single page.
+
+Use database aggregation for reports where appropriate.
+
+Make heavy MRP calculations and large exports asynchronous where necessary.
+
+---
+
+# 27. BACKUP, AUDIT AND DISASTER RECOVERY
+
+Implement:
+
+- Automated database backups.
+- Configurable backup schedule.
+- Backup retention policy.
+- Secure backup storage.
+- Restore documentation.
+- Audit logs.
+- Login history.
+- Failed login tracking.
+- Financial transaction logs.
+- Inventory transaction logs.
+- Approval history.
+
+Record:
+
+- Who performed the action.
+- What changed.
+- Previous value where appropriate.
+- New value.
+- Timestamp.
+- Reference document.
+- IP address where appropriate.
+
+Do not store passwords, access tokens, or other secrets in audit logs.
+
+---
+
+# 28. TESTING REQUIREMENTS
+
+Testing is mandatory.
+
+Use PHPUnit or Pest with Laravel's testing facilities.
+
+## Unit Tests
+
+Test:
+
+- GST calculations.
+- UOM conversions.
+- BOM explosion.
+- BOM costing.
+- Material requirements.
+- Production costing.
+- Inventory valuation.
+- Stock availability.
+- Payment allocation.
+- Journal balancing.
+- OEE calculation.
+
+## Feature Tests
+
+Test:
+
+- Authentication.
+- Permissions.
+- Product management.
+- Supplier management.
+- Purchase requisitions.
+- Purchase orders.
+- GRN.
+- Inventory movements.
+- BOM creation.
+- Work order creation.
+- Material issue.
+- Production entry.
+- Quality inspection.
+- Production completion.
+- Sales invoicing.
+- Accounting posting.
+
+## Critical End-to-End Test
+
+Simulate a complete manufacturing operation:
+
+1. Create a company.
+2. Create a factory.
+3. Create a warehouse.
+4. Create raw material products.
+5. Create a finished product.
+6. Create a supplier.
+7. Create a customer.
+8. Create a purchase order.
+9. Receive materials through GRN.
+10. Perform incoming quality inspection.
+11. Update inventory.
+12. Create a BOM.
+13. Create a routing.
+14. Create a work center.
+15. Create a production plan.
+16. Run MRP.
+17. Create a work order.
+18. Reserve materials.
+19. Issue raw materials.
+20. Record production operations.
+21. Record actual consumption.
+22. Record scrap and rejection.
+23. Complete quality inspection.
+24. Receive finished goods.
+25. Update finished goods stock.
+26. Create a sales order.
+27. Create a delivery challan.
+28. Generate a sales invoice.
+29. Record customer payment.
+30. Generate manufacturing cost report.
+31. Generate Profit and Loss.
+32. Verify stock and accounting balances.
+
+At the end, verify that:
+- Inventory quantities are correct.
+- Raw material consumption is correct.
+- Finished goods quantities are correct.
+- WIP is correctly accounted for.
+- Scrap is accounted for.
+- Invoice calculations are correct.
+- Accounting entries balance.
+- Profitability is calculated correctly.
+- All transactions are traceable.
+
+---
+
+# 29. DEMONSTRATION DATA
+
+Create a realistic demo company:
+
+**Company Name:** ABC Manufacturing Industries Pvt. Ltd.
+
+Industry: Metal and Furniture Manufacturing.
+
+Create demo data:
+
+- 1 company.
+- 2 factories.
+- 4 warehouses.
+- 10 employees.
+- 5 suppliers.
+- 10 customers.
+- 30 raw materials.
+- 10 semi-finished products.
+- 10 finished products.
+- 5 BOMs.
+- 5 routing configurations.
+- 5 work centers.
+- 5 machines.
+- 10 purchase orders.
+- 10 sales orders.
+- 10 work orders.
+- 10 quality inspections.
+
+Create realistic relationships between all records.
+
+Provide demo login credentials through seeders and document them in the installation guide. Never use demo credentials in production.
+
+---
+
+# 30. DEVELOPMENT EXECUTION PLAN
+
+Do not try to generate the entire ERP in a single uncontrolled operation.
+
+Build it in clearly defined phases.
+
+## Phase 1: Architecture and Foundation
+
+Deliver:
+- Application architecture.
+- Database ER diagram.
+- Module dependency diagram.
+- Laravel installation.
+- MySQL configuration.
+- Authentication.
+- Company management.
+- User management.
+- RBAC.
+- Main dashboard layout.
+
+## Phase 2: Master Data
+
+Deliver:
+- Products.
+- Categories.
+- Attributes.
+- UOM.
+- Suppliers.
+- Customers.
+- Warehouses.
+- Departments.
+- Machines.
+- Work centers.
+- Employees.
+
+## Phase 3: Inventory
+
+Deliver:
+- Stock ledger.
+- Stock balances.
+- Warehouse management.
+- Batch tracking.
+- Serial tracking.
+- Stock transfer.
+- Stock adjustment.
+- Inventory valuation.
+- Stock reports.
+
+## Phase 4: Procurement
+
+Deliver:
+- Purchase requisitions.
+- RFQs.
+- Supplier quotations.
+- Purchase orders.
+- GRN.
+- Purchase invoices.
+- Purchase returns.
+- Supplier payments.
+
+## Phase 5: BOM and Routing
+
+Deliver:
+- BOM builder.
+- Multi-level BOM.
+- BOM versioning.
+- BOM costing.
+- Routing.
+- Work centers.
+- Production operations.
+
+## Phase 6: Production Planning
+
+Deliver:
+- Production plans.
+- Demand planning.
+- MRP.
+- Capacity planning.
+- Production scheduling.
+
+## Phase 7: Manufacturing Execution
+
+Deliver:
+- Work orders.
+- Material reservation.
+- Material issue.
+- Production recording.
+- Operation tracking.
+- Material return.
+- Production receipt.
+- Scrap.
+- WIP.
+
+## Phase 8: Quality and Maintenance
+
+Deliver:
+- Quality templates.
+- Incoming inspection.
+- In-process inspection.
+- Finished goods inspection.
+- Non-conformance.
+- Corrective actions.
+- Machine maintenance.
+- Breakdown management.
+
+## Phase 9: Sales and Dispatch
+
+Deliver:
+- Sales enquiry.
+- Quotations.
+- Sales orders.
+- Delivery challans.
+- Dispatch.
+- Sales invoices.
+- Customer payments.
+
+## Phase 10: Finance and Accounting
+
+Deliver:
+- Chart of accounts.
+- Journal entries.
+- General ledger.
+- Accounts payable.
+- Accounts receivable.
+- Manufacturing costing.
+- Financial statements.
+- GST reporting support.
+
+## Phase 11: Advanced Features
+
+Deliver:
+- Subcontracting.
+- Barcode and QR codes.
+- Notifications.
+- Document management.
+- Analytics.
+- API endpoints.
+- Import/export.
+
+## Phase 12: Testing and Deployment
+
+Deliver:
+- Automated tests.
+- End-to-end workflow validation.
+- Security review.
+- Performance optimization.
+- Backup configuration.
+- Production deployment.
+- Documentation.
+
+---
+
+# 31. PROJECT MANAGEMENT AND AI CODING INSTRUCTIONS
+
+Follow these rules throughout development:
+
+1. First inspect the existing project directory before making changes.
+2. If the Laravel project already exists, preserve its architecture and working functionality.
+3. Before writing code, prepare a complete implementation plan.
+4. Prepare the database ER diagram and migration sequence.
+5. Maintain a `PROJECT_PLAN.md`.
+6. Maintain a `DATABASE_SCHEMA.md`.
+7. Maintain a `MODULE_STATUS.md`.
+8. Maintain a `DEVELOPMENT_LOG.md`.
+9. Maintain an `API_DOCUMENTATION.md`.
+10. Maintain a `TESTING_CHECKLIST.md`.
+11. Update documentation after each completed module.
+12. Implement one module at a time.
+13. Never create empty pages just to mark modules as completed.
+14. Never use hardcoded dashboard values.
+15. Never use dummy success messages when a database operation fails.
+16. Never bypass authorization for convenience.
+17. Never silently delete posted financial or stock transactions.
+18. Never create duplicate database tables without checking existing migrations.
+19. Use reusable services and components.
+20. Use Laravel conventions and maintainable code.
+21. Write automated tests for important business logic.
+22. Run tests after each major development phase.
+23. Fix errors before moving to dependent modules.
+24. Do not leave buttons, links, forms, or filters non-functional.
+25. Do not claim a module is complete until its actual workflow has been tested.
+
+When a requirement is ambiguous, document the assumption and use configurable business rules rather than hardcoding an arbitrary behavior.
+
+If the project exceeds the context window, use the project documentation and checklist to continue accurately in subsequent sessions.
+
+---
+
+# 32. FINAL ACCEPTANCE CRITERIA
+
+The software will be considered complete only when:
+
+- All approved modules are implemented.
+- All core workflows function end to end.
+- All database relationships work correctly.
+- All user permissions are enforced.
+- All stock movements are traceable.
+- BOM calculations are correct.
+- MRP calculations are validated.
+- Production costing is accurate.
+- Quality checks work.
+- Sales and purchase operations work.
+- Financial entries balance.
+- Reports display real data.
+- PDF and Excel exports work.
+- Responsive layouts work.
+- Automated tests pass.
+- Installation and deployment documentation is complete.
+
+The system must be ready for real-world manufacturing business operations after environment-specific configuration, user acceptance testing, and any required statutory integration or compliance verification.
+
+---
+
+# 33. FIRST TASK — START DEVELOPMENT
+
+Before writing any application code, complete these tasks:
+
+1. Analyze the entire requirements document.
+2. Break the ERP into modules and submodules.
+3. Identify dependencies between modules.
+4. Design the complete database architecture.
+5. Prepare an ER diagram.
+6. Prepare the application folder structure.
+7. Prepare the development roadmap.
+8. Identify critical business rules.
+9. Identify all financial and inventory transactions.
+10. Identify testing requirements.
+
+Present the architecture and implementation plan first.
+
+Then begin Phase 1.
+
+**Do not stop at planning. After presenting the plan, continue implementing the approved foundation and work through the development phases systematically.**
+
+Your objective is to deliver a complete, commercially usable Manufacturing ERP, not merely demonstrate Laravel coding ability.
