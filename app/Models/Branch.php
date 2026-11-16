@@ -49,3 +49,4 @@ class Branch extends Model
                     ->withTimestamps();
     }
 }
+

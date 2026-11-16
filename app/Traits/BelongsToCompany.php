@@ -32,3 +32,4 @@ trait BelongsToCompany
         return $this->belongsTo(Company::class);
     }
 }
+

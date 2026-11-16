@@ -29,25 +29,62 @@ class FoundationAndAuthenticationTest extends TestCase
     {
         $response = $this->get('/login');
         $response->assertStatus(200);
-        $response->assertSee('Apex Manufacturing ERP');
+        $response->assertSeeText('WebotApp');
     }
 
-    public function test_user_can_authenticate_and_access_dashboard(): void
+    public function test_super_admin_sees_executive_command_center_and_admin_nav(): void
     {
-        $user = User::where('email', 'admin@apexerp.com')->first();
-        $this->assertNotNull($user);
+        $admin = User::where('email', 'admin@apexerp.com')->first();
+        $this->assertNotNull($admin);
 
-        $response = $this->post('/login', [
-            'email' => 'admin@apexerp.com',
-            'password' => 'password',
-        ]);
+        $response = $this->actingAs($admin)->get('/dashboard');
+        $response->assertStatus(200);
+        $response->assertSeeText('Executive & General Plant Command Center');
+        $response->assertSeeText('Enterprise Administration');
+        $response->assertSeeText('Companies & Plants');
+        $response->assertSeeText('Users, Roles & RBAC');
+    }
 
-        $response->assertRedirect('/dashboard');
-        $this->assertAuthenticatedAs($user);
+    public function test_quality_inspector_sees_quality_dashboard_and_no_admin_nav(): void
+    {
+        $qualityUser = User::where('email', 'quality@apexerp.com')->first();
+        $this->assertNotNull($qualityUser);
 
-        $dashboardResponse = $this->actingAs($user)->get('/dashboard');
-        $dashboardResponse->assertStatus(200);
-        $dashboardResponse->assertSee('Manufacturing Command Center');
+        $response = $this->actingAs($qualityUser)->get('/dashboard');
+        $response->assertStatus(200);
+        $response->assertSeeText('QA / QC Quality Command Center');
+        $response->assertSeeText('Pending IQC Inspections');
+        $response->assertSeeText('Inspection Clearance Queue');
+        $response->assertDontSeeText('Companies & Plants');
+        $response->assertDontSeeText('Enterprise Administration');
+    }
+
+    public function test_inventory_manager_sees_inventory_dashboard_and_stock_alerts(): void
+    {
+        $invUser = User::where('email', 'inventory@apexerp.com')->first();
+        $this->assertNotNull($invUser);
+
+        $response = $this->actingAs($invUser)->get('/dashboard');
+        $response->assertStatus(200);
+        $response->assertSeeText('Warehouse & Inventory Command Center');
+        $response->assertSeeText('Critical Low Stock & Reorder Triggers');
+        $response->assertSeeText('Total Stock Valuation');
+        $response->assertDontSeeText('Companies & Plants');
+        $response->assertDontSeeText('Enterprise Administration');
+    }
+
+    public function test_operator_sees_machine_terminal_dashboard(): void
+    {
+        $operator = User::where('email', 'operator@apexerp.com')->first();
+        $this->assertNotNull($operator);
+
+        $response = $this->actingAs($operator)->get('/dashboard');
+        $response->assertStatus(200);
+        $response->assertSeeText('Shop Floor Machine Terminal');
+        $response->assertSeeText('Active Shop Floor Job Card');
+        $response->assertSeeText('Spindle Load');
+        $response->assertDontSeeText('Companies & Plants');
+        $response->assertDontSeeText('Enterprise Administration');
     }
 
     public function test_multi_company_and_branch_context_switching(): void

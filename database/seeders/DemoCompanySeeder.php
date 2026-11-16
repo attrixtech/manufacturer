@@ -182,6 +182,15 @@ class DemoCompanySeeder extends Seeder
                 'designation' => 'Financial Controller',
                 'employee_code' => 'EMP-006',
             ],
+            [
+                'name' => 'Dinesh Pawar',
+                'email' => 'operator@apexerp.com',
+                'role' => 'Machine Operator',
+                'dept' => 'PROD',
+                'branch' => $punePlant->id,
+                'designation' => 'Senior CNC Milling Operator',
+                'employee_code' => 'EMP-007',
+            ],
         ];
 
         foreach ($usersData as $u) {
@@ -213,3 +222,4 @@ class DemoCompanySeeder extends Seeder
         }
     }
 }
+

@@ -32,3 +32,4 @@ class SetCompanyContext
         return $next($request);
     }
 }
+

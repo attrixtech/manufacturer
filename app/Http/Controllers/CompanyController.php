@@ -73,3 +73,4 @@ class CompanyController extends Controller
         return redirect()->route('companies.index')->with('success', 'Company details updated successfully.');
     }
 }
+
