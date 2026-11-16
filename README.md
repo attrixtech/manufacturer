@@ -1,58 +1,96 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# WebotApp-Apex-Manufacturing-ERP
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> **Enterprise-Grade Manufacturing Execution System (MES) & ERP**  
+> Built with Laravel 11/12, Livewire, Tailwind CSS, and MySQL.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🏭 Overview
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**WebotApp Apex Manufacturing ERP** is a full-featured, commercially viable Manufacturing ERP & Shop Floor Execution System designed for discrete, batch, and continuous process manufacturing operations. Built with multi-company and multi-plant capabilities, it brings real-time shop floor telemetry, perpetual double-entry inventory ledger (FIFO), multi-level BOM versioning, QA/QC quarantine workflows, and role-based access control.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🚀 Key Architectural Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Role-Adaptive Operational Dashboards**: Tailored workspaces for Super Admin, Plant Managers, Production Heads, Quality Inspectors, Inventory Managers, Finance Controllers, and Shop Floor Machine Operators.
+- **Multi-Company & Multi-Plant Topology**: Unlimited companies, factories, warehouses, and departments with seamless workspace switching.
+- **Perpetual Inventory Ledger**: Immutable, double-entry stock transactions with batch/lot and serial number genealogy.
+- **Quality Control (QA/QC)**: Quarantine bays, Incoming QC (IQC), In-Process QC (IPQC), Final QC (FQC), and Non-Conformance Reports (NCR/CAPA).
+- **Manufacturing Execution (MES)**: Digital Job Cards, live machine telemetry (spindle load, coolant pressure, tool life), shift output vs. targets, and downtime logging.
+- **Enterprise Security**: Spatie RBAC with 9 pre-configured manufacturing roles and tamper-evident activity/audit logging.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## 🛠️ Technology Stack
 
-## Agentic Development
+| Component | Technology |
+|---|---|
+| **Backend Framework** | Laravel 11/12 (PHP 8.4+) |
+| **Interactive UI** | Livewire 4.x + Alpine.js |
+| **Styling** | Tailwind CSS 4.x |
+| **Database** | MySQL 8.x (Strict Foreign Keys & Decimal Precision) |
+| **Authentication & RBAC** | Laravel Auth + Spatie Laravel-Permission |
+| **Testing** | PHPUnit Feature & Integration Test Suite |
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+---
 
+## 📦 Quick Installation
+
+### 1. Prerequisites
+- PHP 8.3+ with `bcmath`, `curl`, `mbstring`, `pdo_mysql`, `zip`
+- Composer 2.x
+- Node.js 18+ & npm
+- MySQL 8.x
+
+### 2. Setup
 ```bash
-composer require laravel/boost --dev
+# Clone the repository
+git clone https://github.com/webotapp-academy/WebotApp-Apex-Manufacturing-ERP.git
+cd WebotApp-Apex-Manufacturing-ERP
 
-php artisan boost:install
+# Install PHP & Node dependencies
+composer install
+npm install
+
+# Environment configuration
+cp .env.example .env
+php artisan key:generate
+
+# Configure database in .env and run migrations with seeders
+php artisan migrate --seed
+
+# Build frontend assets
+npm run build
+
+# Start local server
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+## 🔑 Demo Access Credentials
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| Role | Email | Password | Assigned Unit |
+| :--- | :--- | :--- | :--- |
+| **Super Administrator** | `admin@apexerp.com` | `password` | Mumbai Corporate HQ |
+| **Plant Manager** | `plant.manager@apexerp.com` | `password` | Pune Heavy Fab Plant |
+| **Production Head** | `production@apexerp.com` | `password` | Pune Heavy Fab Plant |
+| **Quality Inspector** | `quality@apexerp.com` | `password` | Pune Heavy Fab Plant |
+| **Inventory Manager** | `inventory@apexerp.com` | `password` | Pune Heavy Fab Plant |
+| **Accounts Manager** | `accounts@apexerp.com` | `password` | Mumbai Corporate HQ |
+| **Machine Operator** | `operator@apexerp.com` | `password` | Pune CNC Milling Line |
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🧪 Testing
 
-## Security Vulnerabilities
+Run automated feature tests:
+```bash
+php artisan test
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 📄 License
+Commercial / Proprietary & Open Evaluation. Developed by [WebotApp Academy](https://github.com/webotapp-academy).
