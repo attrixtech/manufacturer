@@ -274,10 +274,13 @@
 
                     @if(auth()->user()->hasAnyRole(['Super Administrator', 'Plant Manager']))
                         <!-- Company Switcher Dropdown Form -->
-                        <form action="{{ route('companies.switch') }}" method="POST" class="hidden sm:flex items-center gap-1.5">
+                        <form action="{{ route('companies.switch') }}" method="POST" class="hidden sm:flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-lg px-2 py-1">
                             @csrf
-                            <label for="company_id" class="text-[11px] text-slate-500 font-medium">Company:</label>
-                            <select name="company_id" id="company_id" onchange="this.form.submit()" class="bg-slate-50 border border-slate-200 text-xs rounded-lg px-2.5 py-1 text-slate-800 font-medium focus:outline-none focus:border-amber-500">
+                            <svg class="w-3.5 h-3.5 text-slate-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                            </svg>
+                            <label for="company_id" class="text-[11px] text-slate-500 font-medium">Co:</label>
+                            <select name="company_id" id="company_id" onchange="this.form.submit()" class="bg-transparent text-xs text-slate-800 font-medium focus:outline-none focus:border-amber-500">
                                 @foreach($allCompanies as $comp)
                                     <option value="{{ $comp->id }}" {{ $activeCompany?->id == $comp->id ? 'selected' : '' }}>
                                         {{ $comp->name }}
@@ -287,34 +290,68 @@
                         </form>
 
                         <!-- Branch Switcher Dropdown Form -->
-                        <form action="{{ route('branches.switch') }}" method="POST" class="hidden md:flex items-center gap-1.5">
+                        <form action="{{ route('branches.switch') }}" method="POST" class="hidden md:flex items-center gap-1.5 bg-amber-50/60 border border-amber-200 rounded-lg px-2 py-1">
                             @csrf
-                            <label for="branch_id" class="text-[11px] text-slate-500 font-medium">Plant:</label>
-                            <select name="branch_id" id="branch_id" onchange="this.form.submit()" class="bg-slate-50 border border-slate-200 text-xs rounded-lg px-2.5 py-1 text-amber-700 focus:outline-none focus:border-amber-500 font-bold">
+                            <svg class="w-3.5 h-3.5 text-amber-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+                            </svg>
+                            <label for="branch_id" class="text-[11px] text-amber-800 font-medium">Plant:</label>
+                            <select name="branch_id" id="branch_id" onchange="this.form.submit()" class="bg-transparent text-xs text-amber-800 focus:outline-none font-bold">
                                 @foreach($allBranches as $br)
                                     <option value="{{ $br->id }}" {{ $activeBranch?->id == $br->id ? 'selected' : '' }}>
-                                        {{ $br->name }} ({{ strtoupper($br->type) }})
+                                        {{ $br->name }}
                                     </option>
                                 @endforeach
                             </select>
                         </form>
                     @else
-                        <div class="hidden sm:flex items-center gap-1.5 text-xs text-slate-600">
+                        <div class="hidden sm:flex items-center gap-1.5 text-xs text-slate-600 bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1">
                             <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
                             <span class="font-medium">{{ $activeBranch?->name ?? 'Plant Station' }}</span>
                         </div>
                     @endif
                 </div>
 
-                <!-- Right Quick Indicators -->
-                <div class="flex items-center gap-3">
-                    <div class="hidden lg:flex items-center gap-2 px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 text-[11px] text-slate-700">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                        <span>Role: <strong class="text-amber-700">{{ $userRole }}</strong></span>
+                <!-- Right Quick Indicators & Action Icons -->
+                <div class="flex items-center gap-2.5">
+                    <!-- Quick Dispatch Shortcut -->
+                    <a href="{{ route('work-orders.index') }}" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold shadow-xs transition" title="Dispatch Work Order">
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        <span>Job Order</span>
+                    </a>
+
+                    <!-- Notification Alert Bell -->
+                    <div class="relative">
+                        <button type="button" class="p-2 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition relative cursor-pointer" title="Operational Alerts">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                            </svg>
+                            <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white"></span>
+                        </button>
                     </div>
 
-                    <div class="px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 border border-amber-200 text-xs font-bold flex items-center gap-1.5">
-                        <span>WebotApp MES</span>
+                    <!-- System Roadmap / Documentation Help Icon -->
+                    <a href="{{ route('roadmap.index') }}" class="p-2 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition cursor-pointer" title="Architecture & Development Roadmap">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </a>
+
+                    <!-- Machine Telemetry Status Icon -->
+                    <a href="{{ route('maintenance.index') }}" class="p-2 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition cursor-pointer" title="Machine Telemetry & Sentinel">
+                        <svg class="w-4 h-4 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </a>
+
+                    <div class="h-5 w-px bg-slate-200"></div>
+
+                    <!-- Role Badge -->
+                    <div class="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 text-[11px] text-slate-700">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        <span>Role: <strong class="text-amber-700">{{ $userRole }}</strong></span>
                     </div>
                 </div>
             </header>
