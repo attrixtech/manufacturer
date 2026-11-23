@@ -46,12 +46,83 @@ class ManufacturingOperationsTest extends TestCase
             'wo_number' => 'WO-TEST-999',
             'product_id' => $product->id,
             'planned_qty' => 50,
+            'priority' => 'high',
             'work_center' => 'Assembly Bay 1',
             'target_date' => now()->addDays(5)->toDateString(),
         ]);
 
         $response->assertRedirect();
-        $this->assertDatabaseHas('work_orders', ['wo_number' => 'WO-TEST-999']);
+        $this->assertDatabaseHas('work_orders', [
+            'wo_number' => 'WO-TEST-999',
+            'priority' => 'high',
+        ]);
+    }
+
+    public function test_record_work_order_output(): void
+    {
+        $wo = DB::table('work_orders')->first();
+        $response = $this->actingAs($this->admin)->post(route('work-orders.record-output', $wo->id), [
+            'completed_delta' => 15,
+            'scrap_delta' => 1,
+            'operator_notes' => 'Shift 1 output logged',
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseHas('work_orders', [
+            'id' => $wo->id,
+            'completed_qty' => (float)$wo->completed_qty + 15,
+        ]);
+    }
+
+    public function test_create_bom_with_components(): void
+    {
+        $product = DB::table('products')->first();
+        $rawMaterial = DB::table('products')->where('type', 'raw_material')->first();
+
+        $response = $this->actingAs($this->admin)->post(route('bom.store'), [
+            'bom_number' => 'BOM-TEST-777',
+            'product_id' => $product->id,
+            'version' => 'REV-01',
+            'output_qty' => 1.00,
+            'components' => [
+                [
+                    'product_id' => $rawMaterial->id,
+                    'component_type' => 'raw_material',
+                    'quantity' => 2.5,
+                    'scrap_percentage' => 1.0,
+                ]
+            ],
+            'notes' => 'Test BOM creation',
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseHas('bom_headers', ['bom_number' => 'BOM-TEST-777']);
+        $this->assertDatabaseHas('bom_components', ['quantity' => 2.5]);
+    }
+
+    public function test_create_routing_with_operations(): void
+    {
+        $response = $this->actingAs($this->admin)->post(route('bom.routings.store'), [
+            'routing_code' => 'RT-TEST-123',
+            'name' => 'High Speed Milling Routing',
+            'version' => 'v1.0',
+            'description' => 'Precision test routing',
+            'operations' => [
+                [
+                    'sequence_no' => 10,
+                    'operation_name' => 'Facing & Centering',
+                    'work_center' => 'CNC Bay 1',
+                    'setup_time_mins' => 10,
+                    'run_time_mins' => 20,
+                    'hourly_cost' => 450,
+                    'requires_qc' => 1,
+                ]
+            ],
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseHas('routings', ['routing_code' => 'RT-TEST-123']);
+        $this->assertDatabaseHas('routing_operations', ['operation_name' => 'Facing & Centering']);
     }
 
     public function test_record_quality_inspection(): void

@@ -21,10 +21,11 @@ class OperationsDataSeeder extends Seeder
         $products = [
             ['code' => 'PART-FLG-400-F', 'name' => 'Heavy Forged Flange 400mm Class 150', 'type' => 'finished_good', 'category' => 'Flanges & Valves', 'uom' => 'Pcs', 'standard_cost' => 4850.00, 'current_stock' => 140.00, 'reorder_level' => 30.00],
             ['code' => 'SF-FLG-BLANK', 'name' => 'Flange Forged Blank 400mm Rough Turn', 'type' => 'semi_finished', 'category' => 'Forgings', 'uom' => 'Pcs', 'standard_cost' => 3200.00, 'current_stock' => 85.00, 'reorder_level' => 20.00],
-            ['code' => 'RM-STEEL-4140', 'name' => 'Alloy Steel Bar 4140 Dia 60mm', 'type' => 'raw_material', 'category' => 'Raw Steel', 'uom' => 'Kg', 'standard_cost' => 145.00, 'current_stock' => 240.00, 'reorder_level' => 1000.00],
+            ['code' => 'RM-STEEL-4140', 'name' => 'Alloy Steel Bar 4140 Dia 60mm', 'type' => 'raw_material', 'category' => 'Raw Steel', 'uom' => 'Kg', 'standard_cost' => 145.00, 'current_stock' => 2400.00, 'reorder_level' => 1000.00],
             ['code' => 'RM-STEEL-316L', 'name' => 'Stainless Steel Round Bar 316L 50mm', 'type' => 'raw_material', 'category' => 'Raw Steel', 'uom' => 'Kg', 'standard_cost' => 380.00, 'current_stock' => 1500.00, 'reorder_level' => 500.00],
-            ['code' => 'CUT-CNMG-1204', 'name' => 'Carbide Cutting Inserts CNMG 120408', 'type' => 'consumable', 'category' => 'Tooling & Inserts', 'uom' => 'Pcs', 'standard_cost' => 280.00, 'current_stock' => 12.00, 'reorder_level' => 50.00],
+            ['code' => 'CUT-CNMG-1204', 'name' => 'Carbide Cutting Inserts CNMG 120408', 'type' => 'consumable', 'category' => 'Tooling & Inserts', 'uom' => 'Pcs', 'standard_cost' => 280.00, 'current_stock' => 120.00, 'reorder_level' => 50.00],
             ['code' => 'OIL-HYD-VG68', 'name' => 'Hydraulic Oil VG 68 Grade Industrial', 'type' => 'consumable', 'category' => 'Lubricants', 'uom' => 'Liters', 'standard_cost' => 210.00, 'current_stock' => 80.00, 'reorder_level' => 200.00],
+            ['code' => 'PKG-WOOD-BOX', 'name' => 'Heavy Duty Export Wooden Crate', 'type' => 'consumable', 'category' => 'Packaging Material', 'uom' => 'Pcs', 'standard_cost' => 450.00, 'current_stock' => 95.00, 'reorder_level' => 40.00],
         ];
 
         $productMap = [];
@@ -56,15 +57,54 @@ class OperationsDataSeeder extends Seeder
             $warehouseMap[$wh['code']] = $id;
         }
 
-        // 3. BOM
+        // 3. Routings & Operations
+        $routingId = DB::table('routings')->insertGetId([
+            'company_id' => $company->id,
+            'product_id' => $productMap['PART-FLG-400-F'],
+            'routing_code' => 'RT-FLG-400',
+            'name' => 'Heavy Forged Flange 400mm CNC Routing Sequence',
+            'version' => 'v2.1',
+            'status' => 'active',
+            'total_cycle_time_mins' => 145,
+            'description' => 'Standard high-precision 6-stage routing for ANSI B16.5 certified production.',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $operations = [
+            ['sequence_no' => 10, 'operation_name' => 'Band Saw Bar Cutting', 'work_center' => 'Sawing Bay 1', 'setup_time_mins' => 15, 'run_time_mins' => 20, 'hourly_cost' => 300.00, 'requires_qc' => false, 'instructions' => 'Cut Alloy Bar 4140 to 420mm length billets with coolant flush.'],
+            ['sequence_no' => 20, 'operation_name' => 'CNC Rough Turning & Facing', 'work_center' => 'CNC Milling Line A (Pune)', 'setup_time_mins' => 25, 'run_time_mins' => 45, 'hourly_cost' => 650.00, 'requires_qc' => true, 'instructions' => 'Rough turn OD to 405mm, face both ends within Ra 3.2. Inspect sample for concentricity.'],
+            ['sequence_no' => 30, 'operation_name' => 'CNC PCD 8-Hole Precision Drilling', 'work_center' => 'VMC Precision Line 4', 'setup_time_mins' => 20, 'run_time_mins' => 30, 'hourly_cost' => 550.00, 'requires_qc' => true, 'instructions' => 'Drill 8x Dia 22mm bolt holes at PCD 360mm. Check true position within 0.05mm.'],
+            ['sequence_no' => 40, 'operation_name' => 'Induction Surface Hardening', 'work_center' => 'Heat Treatment Furnace 1', 'setup_time_mins' => 30, 'run_time_mins' => 25, 'hourly_cost' => 800.00, 'requires_qc' => true, 'instructions' => 'Heat treat to 58-62 HRC. Mandatory metallurgical coupon check.'],
+            ['sequence_no' => 50, 'operation_name' => 'CNC Raised Face Serration Grooving', 'work_center' => 'CNC Milling Line A (Pune)', 'setup_time_mins' => 15, 'run_time_mins' => 15, 'hourly_cost' => 650.00, 'requires_qc' => true, 'instructions' => 'Spiral phonographic groove finish 125-250 AARH on gasket contact face.'],
+            ['sequence_no' => 60, 'operation_name' => 'CMM Final Quality & Hydrostatic Test', 'work_center' => 'QA / CMM Metrology Lab', 'setup_time_mins' => 10, 'run_time_mins' => 10, 'hourly_cost' => 450.00, 'requires_qc' => true, 'instructions' => '100% CMM dimensional audit and 1.5x working pressure hydrostatic test.'],
+        ];
+
+        foreach ($operations as $op) {
+            DB::table('routing_operations')->insert(array_merge($op, [
+                'routing_id' => $routingId,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]));
+        }
+
+        // 4. BOM
         $bomId = DB::table('bom_headers')->insertGetId([
             'company_id' => $company->id,
             'bom_number' => 'BOM-FLG-400-REV1',
             'product_id' => $productMap['PART-FLG-400-F'],
-            'version' => 'REV-01',
+            'routing_id' => $routingId,
+            'version' => 'REV-02',
             'output_qty' => 1.00,
             'standard_cost' => 4850.00,
+            'material_cost' => 3228.00,
+            'labour_cost' => 980.00,
+            'overhead_cost' => 642.00,
             'status' => 'approved',
+            'approval_status' => 'approved',
+            'effective_date' => now()->startOfYear()->toDateString(),
+            'expiry_date' => now()->addYear()->toDateString(),
+            'change_reason' => 'Optimized insert usage and updated to v2.1 CNC high-speed routing sequence',
             'notes' => 'Class 150 ANSI Standard Heavy Forged Flange Production Bill of Materials',
             'created_at' => now(),
             'updated_at' => now(),
@@ -74,31 +114,162 @@ class OperationsDataSeeder extends Seeder
             [
                 'bom_header_id' => $bomId,
                 'product_id' => $productMap['SF-FLG-BLANK'],
+                'component_type' => 'semi_finished',
                 'quantity' => 1.0000,
                 'uom' => 'Pcs',
                 'unit_cost' => 3200.00,
+                'subtotal_cost' => 3200.00,
                 'scrap_percentage' => 1.50,
+                'operation_seq' => 10,
+                'issue_warehouse' => 'Shop Floor WIP Staging',
+                'remarks' => 'Primary forged billet rough forged',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'bom_header_id' => $bomId,
                 'product_id' => $productMap['CUT-CNMG-1204'],
+                'component_type' => 'consumable',
                 'quantity' => 0.1000,
                 'uom' => 'Pcs',
                 'unit_cost' => 280.00,
+                'subtotal_cost' => 28.00,
                 'scrap_percentage' => 0.00,
+                'operation_seq' => 20,
+                'issue_warehouse' => 'Tool Crib Store',
+                'remarks' => 'Carbide inserts amortized 10 flanges per edge',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'bom_header_id' => $bomId,
+                'product_id' => $productMap['OIL-HYD-VG68'],
+                'component_type' => 'consumable',
+                'quantity' => 0.2500,
+                'uom' => 'Liters',
+                'unit_cost' => 210.00,
+                'subtotal_cost' => 52.50,
+                'scrap_percentage' => 2.00,
+                'operation_seq' => 20,
+                'issue_warehouse' => 'Raw Material Central Store',
+                'remarks' => 'Cutting fluid coolant top-up allotment',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'bom_header_id' => $bomId,
+                'product_id' => $productMap['PKG-WOOD-BOX'],
+                'component_type' => 'packaging',
+                'quantity' => 0.2000,
+                'uom' => 'Pcs',
+                'unit_cost' => 450.00,
+                'subtotal_cost' => 90.00,
+                'scrap_percentage' => 0.00,
+                'operation_seq' => 60,
+                'issue_warehouse' => 'Finished Goods Warehouse',
+                'remarks' => 'Box packs 5 units with vapor corrosion inhibitor sheet',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
         ]);
 
-        // 4. Work Orders
+        // 5. Work Orders (MES)
         $workOrders = [
-            ['wo_number' => 'WO-2026-0891', 'product_id' => $productMap['PART-FLG-400-F'], 'bom_header_id' => $bomId, 'planned_qty' => 100, 'completed_qty' => 78, 'scrap_qty' => 1, 'status' => 'in_progress', 'work_center' => 'CNC Milling Line A (Pune)', 'start_date' => now()->subDays(2), 'target_date' => now()->addDays(2)],
-            ['wo_number' => 'WO-2026-0894', 'product_id' => $productMap['PART-FLG-400-F'], 'bom_header_id' => $bomId, 'planned_qty' => 50, 'completed_qty' => 22, 'scrap_qty' => 0, 'status' => 'in_progress', 'work_center' => 'Robotic Arc Welding Cell 2', 'start_date' => now()->subDay(), 'target_date' => now()->addDays(3)],
-            ['wo_number' => 'WO-2026-0902', 'product_id' => $productMap['SF-FLG-BLANK'], 'bom_header_id' => null, 'planned_qty' => 200, 'completed_qty' => 184, 'scrap_qty' => 2, 'status' => 'in_progress', 'work_center' => 'VMC Precision Line 4', 'start_date' => now()->subDays(3), 'target_date' => now()->addDay()],
-            ['wo_number' => 'WO-2026-0887', 'product_id' => $productMap['PART-FLG-400-F'], 'bom_header_id' => $bomId, 'planned_qty' => 120, 'completed_qty' => 120, 'scrap_qty' => 1, 'status' => 'completed', 'work_center' => 'Heat Treatment Furnace 1', 'start_date' => now()->subDays(5), 'target_date' => now()->subDay()],
+            [
+                'wo_number' => 'WO-2026-0891',
+                'product_id' => $productMap['PART-FLG-400-F'],
+                'bom_header_id' => $bomId,
+                'routing_id' => $routingId,
+                'planned_qty' => 100,
+                'completed_qty' => 78,
+                'scrap_qty' => 1,
+                'status' => 'in_progress',
+                'priority' => 'urgent',
+                'sales_order_ref' => 'SO-2026-0419',
+                'supervisor' => 'Rajesh Sharma',
+                'production_line' => 'CNC Milling Line A',
+                'work_center' => 'CNC Milling Line A (Pune)',
+                'material_status' => 'issued',
+                'start_date' => now()->subDays(2),
+                'target_date' => now()->addDays(2),
+                'notes' => 'Customer expedited order for L&T Hydrocarbon Project. 24-hr shift dispatched.',
+            ],
+            [
+                'wo_number' => 'WO-2026-0894',
+                'product_id' => $productMap['PART-FLG-400-F'],
+                'bom_header_id' => $bomId,
+                'routing_id' => $routingId,
+                'planned_qty' => 50,
+                'completed_qty' => 22,
+                'scrap_qty' => 0,
+                'status' => 'in_progress',
+                'priority' => 'high',
+                'sales_order_ref' => 'SO-2026-0422',
+                'supervisor' => 'Vikram Deshmukh',
+                'production_line' => 'Robotic Arc Line 2',
+                'work_center' => 'Robotic Arc Welding Cell 2',
+                'material_status' => 'issued',
+                'start_date' => now()->subDay(),
+                'target_date' => now()->addDays(3),
+                'notes' => 'Batch requires ultrasonic inspection test before release to surface grooving.',
+            ],
+            [
+                'wo_number' => 'WO-2026-0902',
+                'product_id' => $productMap['SF-FLG-BLANK'],
+                'bom_header_id' => null,
+                'routing_id' => null,
+                'planned_qty' => 200,
+                'completed_qty' => 184,
+                'scrap_qty' => 2,
+                'status' => 'in_progress',
+                'priority' => 'medium',
+                'sales_order_ref' => 'MTS-INTERNAL-REPLENISH',
+                'supervisor' => 'Sunil Shinde',
+                'production_line' => 'VMC Precision Cell 4',
+                'work_center' => 'VMC Precision Line 4',
+                'material_status' => 'reserved',
+                'start_date' => now()->subDays(3),
+                'target_date' => now()->addDay(),
+                'notes' => 'Make-to-Stock replenishment for internal WIP forged blank buffer.',
+            ],
+            [
+                'wo_number' => 'WO-2026-0887',
+                'product_id' => $productMap['PART-FLG-400-F'],
+                'bom_header_id' => $bomId,
+                'routing_id' => $routingId,
+                'planned_qty' => 120,
+                'completed_qty' => 120,
+                'scrap_qty' => 1,
+                'status' => 'completed',
+                'priority' => 'high',
+                'sales_order_ref' => 'SO-2026-0398',
+                'supervisor' => 'Rajesh Sharma',
+                'production_line' => 'Furnace Heat Line 1',
+                'work_center' => 'Heat Treatment Furnace 1',
+                'material_status' => 'issued',
+                'start_date' => now()->subDays(5),
+                'target_date' => now()->subDay(),
+                'notes' => 'Full batch heat-treated, certified 60 HRC, passed final FQC inspection.',
+            ],
+            [
+                'wo_number' => 'WO-2026-0915',
+                'product_id' => $productMap['PART-FLG-400-F'],
+                'bom_header_id' => $bomId,
+                'routing_id' => $routingId,
+                'planned_qty' => 80,
+                'completed_qty' => 0,
+                'scrap_qty' => 0,
+                'status' => 'released',
+                'priority' => 'urgent',
+                'sales_order_ref' => 'SO-2026-0435',
+                'supervisor' => 'Anil Patil',
+                'production_line' => 'CNC Milling Line A',
+                'work_center' => 'CNC Milling Line A (Pune)',
+                'material_status' => 'available',
+                'start_date' => now(),
+                'target_date' => now()->addDays(4),
+                'notes' => 'Job packet released to shop floor, raw stock verified in Bay A-1.',
+            ],
         ];
 
         foreach ($workOrders as $wo) {
@@ -110,10 +281,10 @@ class OperationsDataSeeder extends Seeder
             ]));
         }
 
-        // 5. Stock Ledger
+        // 6. Stock Ledger
         $ledgerEntries = [
             ['warehouse_id' => $warehouseMap['WH-RAW-01'], 'product_id' => $productMap['RM-STEEL-316L'], 'batch_no' => 'LOT-SS316-092', 'quantity_change' => 1500.00, 'balance_after' => 1500.00, 'unit_cost' => 380.00, 'total_value' => 570000.00, 'voucher_type' => 'GRN', 'source_doc' => 'GRN-2026-0118', 'remarks' => 'Inward receipt from Jindal Stainless Ltd.'],
-            ['warehouse_id' => $warehouseMap['WH-RAW-01'], 'product_id' => $productMap['RM-STEEL-4140'], 'batch_no' => 'LOT-4140-B3', 'quantity_change' => -200.00, 'balance_after' => 240.00, 'unit_cost' => 145.00, 'total_value' => 29000.00, 'voucher_type' => 'Production Issue', 'source_doc' => 'WO-2026-0891', 'remarks' => 'Issued to shop floor line A'],
+            ['warehouse_id' => $warehouseMap['WH-RAW-01'], 'product_id' => $productMap['RM-STEEL-4140'], 'batch_no' => 'LOT-4140-B3', 'quantity_change' => -200.00, 'balance_after' => 2400.00, 'unit_cost' => 145.00, 'total_value' => 29000.00, 'voucher_type' => 'Production Issue', 'source_doc' => 'WO-2026-0891', 'remarks' => 'Issued to shop floor line A'],
             ['warehouse_id' => $warehouseMap['WH-FG-01'], 'product_id' => $productMap['PART-FLG-400-F'], 'batch_no' => 'LOT-FLG-0887', 'quantity_change' => 120.00, 'balance_after' => 140.00, 'unit_cost' => 4850.00, 'total_value' => 582000.00, 'voucher_type' => 'Production Receipt', 'source_doc' => 'WO-2026-0887', 'remarks' => 'Completed batch transfer from Heat Treatment'],
         ];
 
@@ -126,7 +297,7 @@ class OperationsDataSeeder extends Seeder
             ]));
         }
 
-        // 6. Purchase Orders
+        // 7. Purchase Orders
         $pos = [
             ['po_number' => 'PO-2026-0142', 'supplier_name' => 'Tata Steel Limited', 'order_date' => now()->subDays(4), 'expected_date' => now()->addDays(5), 'total_amount' => 2450000.00, 'status' => 'approved', 'payment_status' => 'unpaid'],
             ['po_number' => 'PO-2026-0145', 'supplier_name' => 'Bharat Forge Limited', 'order_date' => now()->subDays(6), 'expected_date' => now()->addDays(2), 'total_amount' => 1280000.00, 'status' => 'received_partial', 'payment_status' => 'partial'],
@@ -152,7 +323,7 @@ class OperationsDataSeeder extends Seeder
             ]);
         }
 
-        // 7. Quality Inspections & NCRs
+        // 8. Quality Inspections & NCRs
         $inspections = [
             ['inspection_number' => 'QC-2026-0312', 'type' => 'incoming_iqc', 'product_id' => $productMap['RM-STEEL-316L'], 'batch_no' => 'LOT-SS316-092', 'reference_doc' => 'GRN-2026-0118', 'sample_size' => 15.00, 'accepted_qty' => 0.00, 'rejected_qty' => 0.00, 'status' => 'pending', 'findings' => 'Chemical spectrometer lab assay and dimensional check pending'],
             ['inspection_number' => 'QC-2026-0315', 'type' => 'in_process_ipqc', 'product_id' => $productMap['PART-FLG-400-F'], 'batch_no' => 'WO-2026-0891-OP2', 'reference_doc' => 'WO-2026-0891', 'sample_size' => 10.00, 'accepted_qty' => 10.00, 'rejected_qty' => 0.00, 'status' => 'accepted', 'findings' => 'Facing tolerance within +/- 0.02mm, surface finish Ra 1.6 certified'],
@@ -193,7 +364,7 @@ class OperationsDataSeeder extends Seeder
             ],
         ]);
 
-        // 8. Machines & Breakdowns
+        // 9. Machines & Breakdowns
         $machines = [
             ['code' => 'MC-VMC-01', 'name' => 'CNC Milling Center VMC-01', 'work_center' => 'CNC Milling Line A (Pune)', 'status' => 'running', 'spindle_load' => 72, 'coolant_pressure' => 4.80, 'tool_life' => 84],
             ['code' => 'MC-ROBOT-02', 'name' => 'Robotic Arc Welding Cell 2', 'work_center' => 'Welding Bay 2', 'status' => 'running', 'spindle_load' => 65, 'coolant_pressure' => 5.20, 'tool_life' => 91],
@@ -225,7 +396,7 @@ class OperationsDataSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
-        // 9. Chart of Accounts & Journal Entries
+        // 10. Chart of Accounts & Journal Entries
         $accounts = [
             ['code' => '1001', 'name' => 'Raw Materials Inventory', 'type' => 'asset', 'balance' => 24500000.00],
             ['code' => '1002', 'name' => 'Work-In-Progress (WIP) Inventory', 'type' => 'asset', 'balance' => 13500000.00],

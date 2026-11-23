@@ -46,11 +46,14 @@ Route::middleware('auth')->group(function () {
     // 1. Work Orders & MES
     Route::get('/work-orders', [WorkOrderController::class, 'index'])->name('work-orders.index');
     Route::post('/work-orders', [WorkOrderController::class, 'store'])->name('work-orders.store');
+    Route::post('/work-orders/{id}/record-output', [WorkOrderController::class, 'recordOutput'])->name('work-orders.record-output');
     Route::patch('/work-orders/{id}/status', [WorkOrderController::class, 'updateStatus'])->name('work-orders.update-status');
 
     // 2. BOM & Routings
     Route::get('/bom', [BomController::class, 'index'])->name('bom.index');
     Route::post('/bom', [BomController::class, 'store'])->name('bom.store');
+    Route::post('/bom/routings', [BomController::class, 'storeRouting'])->name('bom.routings.store');
+    Route::patch('/bom/{id}/approve', [BomController::class, 'approve'])->name('bom.approve');
 
     // 3. Stock Ledger & Bins (Inventory)
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
