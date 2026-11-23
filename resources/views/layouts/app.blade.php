@@ -131,93 +131,93 @@
 
                         <!-- Production Modules -->
                         @if(auth()->user()->can('work_orders.view') || auth()->user()->hasRole('Machine Operator'))
-                            <div class="flex items-center justify-between px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 cursor-pointer">
+                            <a href="{{ route('work-orders.index') }}" class="flex items-center justify-between px-3 py-2 rounded-lg transition-colors {{ request()->routeIs('work-orders.*') ? 'bg-amber-500 text-white font-bold shadow-sm shadow-amber-500/20' : 'text-slate-700 hover:bg-slate-100' }}">
                                 <div class="flex items-center gap-3">
-                                    <svg class="w-4 h-4 shrink-0 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('work-orders.*') ? 'text-white' : 'text-amber-500' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                                     </svg>
                                     <span>{{ $userRole === 'Machine Operator' ? 'Active Job Cards' : 'Work Orders & MES' }}</span>
                                 </div>
-                                <span class="text-[9px] bg-blue-50 text-blue-700 border border-blue-200 px-1.5 py-0.5 rounded font-mono font-bold">MES</span>
-                            </div>
+                                <span class="text-[9px] {{ request()->routeIs('work-orders.*') ? 'bg-white/20 text-white' : 'bg-blue-50 text-blue-700 border border-blue-200' }} px-1.5 py-0.5 rounded font-mono font-bold">MES</span>
+                            </a>
                         @endif
 
                         <!-- BOM / Routing Modules -->
                         @if(auth()->user()->can('bom.view'))
-                            <div class="flex items-center justify-between px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 cursor-pointer">
+                            <a href="{{ route('bom.index') }}" class="flex items-center justify-between px-3 py-2 rounded-lg transition-colors {{ request()->routeIs('bom.*') ? 'bg-amber-500 text-white font-bold shadow-sm shadow-amber-500/20' : 'text-slate-700 hover:bg-slate-100' }}">
                                 <div class="flex items-center gap-3">
-                                    <svg class="w-4 h-4 shrink-0 text-cyan-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('bom.*') ? 'text-white' : 'text-cyan-600' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                                     </svg>
                                     <span>BOM & Routings</span>
                                 </div>
-                                <span class="text-[9px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded font-mono font-medium">ENG</span>
-                            </div>
+                                <span class="text-[9px] {{ request()->routeIs('bom.*') ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }} px-1.5 py-0.5 rounded font-mono font-medium">ENG</span>
+                            </a>
                         @endif
 
                         <!-- Inventory & Stock Modules -->
                         @if(auth()->user()->can('inventory.view'))
-                            <div class="flex items-center justify-between px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 cursor-pointer">
+                            <a href="{{ route('inventory.index') }}" class="flex items-center justify-between px-3 py-2 rounded-lg transition-colors {{ request()->routeIs('inventory.*') ? 'bg-amber-500 text-white font-bold shadow-sm shadow-amber-500/20' : 'text-slate-700 hover:bg-slate-100' }}">
                                 <div class="flex items-center gap-3">
-                                    <svg class="w-4 h-4 shrink-0 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('inventory.*') ? 'text-white' : 'text-emerald-600' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
                                     </svg>
                                     <span>Stock Ledger & Bins</span>
                                 </div>
-                                <span class="text-[9px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded font-mono font-medium">SCM</span>
-                            </div>
+                                <span class="text-[9px] {{ request()->routeIs('inventory.*') ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }} px-1.5 py-0.5 rounded font-mono font-medium">SCM</span>
+                            </a>
                         @endif
 
                         <!-- Quality Assurance Modules -->
                         @if(auth()->user()->can('quality.view'))
-                            <div class="flex items-center justify-between px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 cursor-pointer">
+                            <a href="{{ route('quality.index') }}" class="flex items-center justify-between px-3 py-2 rounded-lg transition-colors {{ request()->routeIs('quality.*') ? 'bg-amber-500 text-white font-bold shadow-sm shadow-amber-500/20' : 'text-slate-700 hover:bg-slate-100' }}">
                                 <div class="flex items-center gap-3">
-                                    <svg class="w-4 h-4 shrink-0 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('quality.*') ? 'text-white' : 'text-purple-600' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                                     </svg>
                                     <span>Quality & Inspections</span>
                                 </div>
-                                <span class="text-[9px] bg-purple-50 text-purple-700 border border-purple-200 px-1.5 py-0.5 rounded font-mono font-bold">QA/QC</span>
-                            </div>
+                                <span class="text-[9px] {{ request()->routeIs('quality.*') ? 'bg-white/20 text-white' : 'bg-purple-50 text-purple-700 border border-purple-200' }} px-1.5 py-0.5 rounded font-mono font-bold">QA/QC</span>
+                            </a>
                         @endif
 
                         <!-- Procurement Modules -->
                         @if(auth()->user()->can('procurement.view'))
-                            <div class="flex items-center justify-between px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 cursor-pointer">
+                            <a href="{{ route('procurement.index') }}" class="flex items-center justify-between px-3 py-2 rounded-lg transition-colors {{ request()->routeIs('procurement.*') ? 'bg-amber-500 text-white font-bold shadow-sm shadow-amber-500/20' : 'text-slate-700 hover:bg-slate-100' }}">
                                 <div class="flex items-center gap-3">
-                                    <svg class="w-4 h-4 shrink-0 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('procurement.*') ? 'text-white' : 'text-orange-500' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                                     </svg>
                                     <span>Procurement & PO</span>
                                 </div>
-                                <span class="text-[9px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded font-mono font-medium">PUR</span>
-                            </div>
+                                <span class="text-[9px] {{ request()->routeIs('procurement.*') ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600' }} px-1.5 py-0.5 rounded font-mono font-medium">PUR</span>
+                            </a>
                         @endif
 
                         <!-- Finance & Costing Modules -->
                         @if(auth()->user()->can('accounting.view'))
-                            <div class="flex items-center justify-between px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 cursor-pointer">
+                            <a href="{{ route('accounting.index') }}" class="flex items-center justify-between px-3 py-2 rounded-lg transition-colors {{ request()->routeIs('accounting.*') ? 'bg-amber-500 text-white font-bold shadow-sm shadow-amber-500/20' : 'text-slate-700 hover:bg-slate-100' }}">
                                 <div class="flex items-center gap-3">
-                                    <svg class="w-4 h-4 shrink-0 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('accounting.*') ? 'text-white' : 'text-emerald-600' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                     <span>General Ledger & GST</span>
                                 </div>
-                                <span class="text-[9px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-1.5 py-0.5 rounded font-mono font-bold">FIN</span>
-                            </div>
+                                <span class="text-[9px] {{ request()->routeIs('accounting.*') ? 'bg-white/20 text-white' : 'bg-emerald-50 text-emerald-700 border border-emerald-200' }} px-1.5 py-0.5 rounded font-mono font-bold">FIN</span>
+                            </a>
                         @endif
 
                         <!-- Maintenance & Breakdown Modules -->
                         @if(auth()->user()->can('maintenance.view') || auth()->user()->hasRole('Machine Operator'))
-                            <div class="flex items-center justify-between px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100 cursor-pointer">
+                            <a href="{{ route('maintenance.index') }}" class="flex items-center justify-between px-3 py-2 rounded-lg transition-colors {{ request()->routeIs('maintenance.*') ? 'bg-amber-500 text-white font-bold shadow-sm shadow-amber-500/20' : 'text-slate-700 hover:bg-slate-100' }}">
                                 <div class="flex items-center gap-3">
-                                    <svg class="w-4 h-4 shrink-0 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('maintenance.*') ? 'text-white' : 'text-rose-500' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                                     </svg>
                                     <span>Breakdown & Downtime</span>
                                 </div>
-                                <span class="text-[9px] bg-rose-50 text-rose-700 border border-rose-200 px-1.5 py-0.5 rounded font-mono font-bold">ALERT</span>
-                            </div>
+                                <span class="text-[9px] {{ request()->routeIs('maintenance.*') ? 'bg-white/20 text-white' : 'bg-rose-50 text-rose-700 border border-rose-200' }} px-1.5 py-0.5 rounded font-mono font-bold">ALERT</span>
+                            </a>
                         @endif
 
                     </div>
