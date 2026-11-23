@@ -158,6 +158,63 @@ class ManufacturingOperationsTest extends TestCase
         $this->assertDatabaseHas('purchase_orders', ['po_number' => 'PO-TEST-888']);
     }
 
+    public function test_create_plant_and_department(): void
+    {
+        $company = DB::table('companies')->first();
+
+        // Create Plant
+        $plantResponse = $this->actingAs($this->admin)->post(route('plants.store'), [
+            'company_id' => $company->id,
+            'name' => 'Nashik Precision Forging Plant',
+            'code' => 'NSK-PLT',
+            'type' => 'factory',
+            'city' => 'Nashik',
+            'state' => 'Maharashtra',
+        ]);
+        $plantResponse->assertRedirect();
+        $this->assertDatabaseHas('branches', ['code' => 'NSK-PLT']);
+
+        // Create Department
+        $deptResponse = $this->actingAs($this->admin)->post(route('departments.store'), [
+            'company_id' => $company->id,
+            'name' => 'Metallurgical Lab & Testing',
+            'code' => 'MET-LAB',
+        ]);
+        $deptResponse->assertRedirect();
+        $this->assertDatabaseHas('departments', ['code' => 'MET-LAB']);
+    }
+
+    public function test_create_company_entity(): void
+    {
+        $response = $this->actingAs($this->admin)->post(route('companies.store'), [
+            'name' => 'Apex Aerospace Systems Ltd.',
+            'code' => 'APEX-AERO',
+            'currency' => 'INR',
+        ]);
+        $response->assertRedirect();
+        $this->assertDatabaseHas('companies', ['code' => 'APEX-AERO']);
+    }
+
+    public function test_create_security_role(): void
+    {
+        $response = $this->actingAs($this->admin)->post(route('roles.store'), [
+            'name' => 'Tooling Specialist',
+        ]);
+        $response->assertRedirect();
+        $this->assertDatabaseHas('roles', ['name' => 'Tooling Specialist']);
+    }
+
+    public function test_create_work_center(): void
+    {
+        $response = $this->actingAs($this->admin)->post(route('work-orders.work-centers.store'), [
+            'code' => 'MC-LINE-99',
+            'name' => '5-Axis Horizontal Machining Center',
+            'work_center' => '5-Axis Cell 9',
+        ]);
+        $response->assertRedirect();
+        $this->assertDatabaseHas('machines', ['code' => 'MC-LINE-99', 'work_center' => '5-Axis Cell 9']);
+    }
+
     public function test_log_machine_breakdown(): void
     {
         $machine = DB::table('machines')->first();

@@ -31,11 +31,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/switch-company', [CompanyController::class, 'switchCompany'])->name('companies.switch');
     Route::post('/switch-branch', [CompanyController::class, 'switchBranch'])->name('branches.switch');
 
-    // Company & Branch Management
-    Route::resource('companies', CompanyController::class)->only(['index', 'edit', 'update']);
+    // Company, Plant/Branch & Department Management
+    Route::resource('companies', CompanyController::class)->only(['index', 'store', 'edit', 'update']);
+    Route::post('/plants', [CompanyController::class, 'storeBranch'])->name('plants.store');
+    Route::post('/departments', [CompanyController::class, 'storeDepartment'])->name('departments.store');
 
     // User & RBAC Management
     Route::resource('users', UserController::class)->only(['index', 'store']);
+    Route::post('/roles', [UserController::class, 'storeRole'])->name('roles.store');
     Route::patch('/users/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggle-status');
 
     // Roadmap
@@ -46,6 +49,7 @@ Route::middleware('auth')->group(function () {
     // 1. Work Orders & MES
     Route::get('/work-orders', [WorkOrderController::class, 'index'])->name('work-orders.index');
     Route::post('/work-orders', [WorkOrderController::class, 'store'])->name('work-orders.store');
+    Route::post('/work-orders/work-centers', [WorkOrderController::class, 'storeWorkCenter'])->name('work-orders.work-centers.store');
     Route::post('/work-orders/{id}/record-output', [WorkOrderController::class, 'recordOutput'])->name('work-orders.record-output');
     Route::patch('/work-orders/{id}/status', [WorkOrderController::class, 'updateStatus'])->name('work-orders.update-status');
 

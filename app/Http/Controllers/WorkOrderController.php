@@ -76,6 +76,20 @@ class WorkOrderController extends Controller
         $routings = DB::table('routings')->where('company_id', $companyId)->get();
         $machines = DB::table('machines')->where('company_id', $companyId)->get();
 
+        $workCenters = collect([
+            'CNC Milling Line A (Pune)',
+            'Robotic Arc Welding Cell 2',
+            'VMC Precision Line 4',
+            'Heat Treatment Furnace 1',
+            'Sawing Bay 1',
+            'QA / CMM Metrology Lab',
+        ])->merge($machines->pluck('work_center'))
+          ->merge(DB::table('routing_operations')->pluck('work_center'))
+          ->merge($workOrders->pluck('work_center'))
+          ->filter()
+          ->unique()
+          ->values();
+
         $stats = [
             'total' => $workOrders->count(),
             'in_progress' => $workOrders->where('status', 'in_progress')->count(),
@@ -84,7 +98,37 @@ class WorkOrderController extends Controller
             'urgent_count' => $workOrders->whereIn('priority', ['urgent', 'high'])->whereNotIn('status', ['completed', 'cancelled'])->count(),
         ];
 
-        return view('production.work_orders', compact('workOrders', 'products', 'boms', 'routings', 'machines', 'stats'));
+        return view('production.work_orders', compact('workOrders', 'products', 'boms', 'routings', 'machines', 'workCenters', 'stats'));
+    }
+
+    public function storeWorkCenter(Request $request)
+    {
+        $request->validate([
+            'code' => 'required|string|max:50',
+            'name' => 'required|string|max:255',
+            'work_center' => 'required|string|max:255',
+        ]);
+
+        $companyId = session('current_company_id') ?? auth()->user()->company_id;
+        $branchId = session('current_branch_id') ?? auth()->user()->branch_id;
+
+        DB::table('machines')->insert([
+            'company_id' => $companyId,
+            'branch_id' => $branchId,
+            'code' => $request->code,
+            'name' => $request->name,
+            'work_center' => $request->work_center,
+            'status' => 'running',
+            'spindle_load' => 60,
+            'coolant_pressure' => 5.0,
+            'tool_life' => 100,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        ActivityLog::log('create', 'production', "Registered work center / machine: {$request->name} ({$request->work_center})");
+
+        return back()->with('success', "Work Center / Line '{$request->work_center}' added successfully.");
     }
 
     public function store(Request $request)

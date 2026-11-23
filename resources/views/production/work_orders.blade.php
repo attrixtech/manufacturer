@@ -398,9 +398,15 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div class="space-y-1">
-                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Bill of Materials (BOM)</label>
-                        <select name="bom_header_id" class="w-full text-xs rounded-xl border-slate-200 focus:border-amber-500 focus:ring-amber-500">
+                        <div class="flex items-center justify-between">
+                            <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Bill of Materials (BOM)</label>
+                            <button type="button" onclick="openQuickBomModal()" class="text-[10px] font-bold text-cyan-600 hover:text-cyan-800 hover:underline cursor-pointer flex items-center gap-1">
+                                <span>+ Add New BOM</span>
+                            </button>
+                        </div>
+                        <select name="bom_header_id" id="woBomSelect" onchange="if(this.value==='NEW_BOM'){openQuickBomModal(); this.value='';}" class="w-full text-xs rounded-xl border-slate-200 focus:border-amber-500 focus:ring-amber-500">
                             <option value="">-- No BOM Assigned --</option>
+                            <option value="NEW_BOM" class="font-bold text-cyan-600 bg-cyan-50">+ Add New BOM...</option>
                             @foreach($boms as $b)
                                 <option value="{{ $b->id }}">{{ $b->bom_number }} ({{ $b->version }})</option>
                             @endforeach
@@ -408,9 +414,15 @@
                     </div>
 
                     <div class="space-y-1">
-                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Manufacturing Routing</label>
-                        <select name="routing_id" class="w-full text-xs rounded-xl border-slate-200 focus:border-amber-500 focus:ring-amber-500">
+                        <div class="flex items-center justify-between">
+                            <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Manufacturing Routing</label>
+                            <button type="button" onclick="openQuickRoutingModal()" class="text-[10px] font-bold text-cyan-600 hover:text-cyan-800 hover:underline cursor-pointer flex items-center gap-1">
+                                <span>+ Add New Routing</span>
+                            </button>
+                        </div>
+                        <select name="routing_id" id="woRoutingSelect" onchange="if(this.value==='NEW_ROUTING'){openQuickRoutingModal(); this.value='';}" class="w-full text-xs rounded-xl border-slate-200 focus:border-amber-500 focus:ring-amber-500">
                             <option value="">-- No Routing Assigned --</option>
+                            <option value="NEW_ROUTING" class="font-bold text-cyan-600 bg-cyan-50">+ Add New Routing...</option>
                             @foreach($routings as $r)
                                 <option value="{{ $r->id }}">{{ $r->routing_code }} — {{ $r->name }}</option>
                             @endforeach
@@ -420,12 +432,17 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div class="space-y-1">
-                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Work Center / Line</label>
-                        <select name="work_center" required class="w-full text-xs rounded-xl border-slate-200 focus:border-amber-500 focus:ring-amber-500">
-                            <option value="CNC Milling Line A (Pune)">CNC Milling Line A (Pune)</option>
-                            <option value="Robotic Arc Welding Cell 2">Robotic Arc Welding Cell 2</option>
-                            <option value="VMC Precision Line 4">VMC Precision Line 4</option>
-                            <option value="Heat Treatment Furnace 1">Heat Treatment Furnace 1</option>
+                        <div class="flex items-center justify-between">
+                            <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Work Center / Line</label>
+                            <button type="button" onclick="openQuickWorkCenterModal()" class="text-[10px] font-bold text-amber-600 hover:text-amber-800 hover:underline cursor-pointer flex items-center gap-1">
+                                <span>+ Add New Line</span>
+                            </button>
+                        </div>
+                        <select name="work_center" id="woWorkCenterSelect" onchange="if(this.value==='NEW_LINE'){openQuickWorkCenterModal(); this.value='CNC Milling Line A (Pune)';}" required class="w-full text-xs rounded-xl border-slate-200 focus:border-amber-500 focus:ring-amber-500">
+                            <option value="NEW_LINE" class="font-bold text-amber-600 bg-amber-50">+ Add New Work Center / Line...</option>
+                            @foreach($workCenters as $wc)
+                                <option value="{{ $wc }}" {{ $wc === 'CNC Milling Line A (Pune)' ? 'selected' : '' }}>{{ $wc }}</option>
+                            @endforeach
                         </select>
                     </div>
 
@@ -460,6 +477,183 @@
         </div>
     </div>
 
+    <!-- Quick Add BOM Modal -->
+    <div id="quickBomModal" class="hidden fixed inset-0 z-60 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 border border-slate-200 shadow-2xl space-y-4 my-8">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-cyan-500"></span>
+                    <h3 class="text-sm font-black text-slate-900">Quick Create Bill of Materials (BOM)</h3>
+                </div>
+                <button type="button" onclick="closeQuickBomModal()" class="text-slate-400 hover:text-slate-600 text-sm font-bold">✕</button>
+            </div>
+
+            <form method="POST" action="{{ route('bom.store') }}" class="space-y-4">
+                @csrf
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">BOM Code #</label>
+                        <input type="text" name="bom_number" value="BOM-{{ date('Y') }}-{{ rand(100,999) }}" required class="w-full text-xs rounded-xl border-slate-200 focus:border-cyan-500 focus:ring-cyan-500 font-mono">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Revision Version</label>
+                        <input type="text" name="version" value="REV-01" required class="w-full text-xs rounded-xl border-slate-200 focus:border-cyan-500 focus:ring-cyan-500 font-mono">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Finished Product</label>
+                        <select name="product_id" required class="w-full text-xs rounded-xl border-slate-200 focus:border-cyan-500 focus:ring-cyan-500">
+                            @foreach($products as $prod)
+                                <option value="{{ $prod->id }}">{{ $prod->code }} — {{ $prod->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Batch Yield</label>
+                        <input type="number" step="0.01" name="output_qty" value="1.00" required class="w-full text-xs rounded-xl border-slate-200 focus:border-cyan-500 focus:ring-cyan-500 font-mono">
+                    </div>
+                </div>
+
+                <!-- Primary Component Row -->
+                <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                    <div class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Primary Raw Material Component</div>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div class="col-span-2">
+                            <select name="components[0][product_id]" required class="w-full text-xs rounded-lg border-slate-200">
+                                @foreach($products as $prod)
+                                    <option value="{{ $prod->id }}">{{ $prod->code }} — {{ $prod->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <input type="number" step="0.0001" min="0.0001" name="components[0][quantity]" value="1.0000" placeholder="Qty" required class="w-full text-xs font-mono rounded-lg border-slate-200">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Engineering Notes</label>
+                    <textarea name="notes" rows="2" placeholder="Quick BOM definition created from Work Order screen..." class="w-full text-xs rounded-xl border-slate-200 focus:border-cyan-500 focus:ring-cyan-500"></textarea>
+                </div>
+
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeQuickBomModal()" class="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl transition">Cancel</button>
+                    <button type="submit" class="px-4 py-2 text-xs font-bold text-white bg-cyan-600 hover:bg-cyan-700 rounded-xl transition">Create & Link BOM</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Quick Add Routing Modal -->
+    <div id="quickRoutingModal" class="hidden fixed inset-0 z-60 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 border border-slate-200 shadow-2xl space-y-4 my-8">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-cyan-500"></span>
+                    <h3 class="text-sm font-black text-slate-900">Quick Create Manufacturing Routing</h3>
+                </div>
+                <button type="button" onclick="closeQuickRoutingModal()" class="text-slate-400 hover:text-slate-600 text-sm font-bold">✕</button>
+            </div>
+
+            <form method="POST" action="{{ route('bom.routings.store') }}" class="space-y-4">
+                @csrf
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Routing Code #</label>
+                        <input type="text" name="routing_code" value="RT-{{ date('Y') }}-{{ rand(100,999) }}" required class="w-full text-xs rounded-xl border-slate-200 focus:border-cyan-500 focus:ring-cyan-500 font-mono">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Version</label>
+                        <input type="text" name="version" value="v1.0" required class="w-full text-xs rounded-xl border-slate-200 focus:border-cyan-500 focus:ring-cyan-500 font-mono">
+                    </div>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Routing Sequence Name</label>
+                    <input type="text" name="name" placeholder="e.g. 4-Axis CNC Milling & QA Inspection" required class="w-full text-xs rounded-xl border-slate-200 focus:border-cyan-500 focus:ring-cyan-500">
+                </div>
+
+                <!-- Primary Operation Row -->
+                <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                    <div class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Primary Operation Step (Op 10)</div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="text-[10px] text-slate-500">Operation Name</label>
+                            <input type="text" name="operations[0][operation_name]" value="CNC Machining & Turning" required class="w-full text-xs rounded-lg border-slate-200">
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-slate-500">Work Center</label>
+                            <input type="text" name="operations[0][work_center]" value="CNC Milling Line A (Pune)" required class="w-full text-xs rounded-lg border-slate-200">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div>
+                            <label class="text-[10px] text-slate-500">Setup (min)</label>
+                            <input type="number" name="operations[0][setup_time_mins]" value="15" class="w-full text-xs font-mono rounded-lg border-slate-200">
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-slate-500">Run (min)</label>
+                            <input type="number" name="operations[0][run_time_mins]" value="30" class="w-full text-xs font-mono rounded-lg border-slate-200">
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-slate-500">Hourly Rate (₹)</label>
+                            <input type="number" name="operations[0][hourly_cost]" value="550" class="w-full text-xs font-mono rounded-lg border-slate-200">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeQuickRoutingModal()" class="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl transition">Cancel</button>
+                    <button type="submit" class="px-4 py-2 text-xs font-bold text-white bg-cyan-600 hover:bg-cyan-700 rounded-xl transition">Create & Link Routing</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Quick Add Work Center Modal -->
+    <div id="quickWorkCenterModal" class="hidden fixed inset-0 z-60 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 border border-slate-200 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                    <h3 class="text-sm font-black text-slate-900">Add New Work Center / Production Line</h3>
+                </div>
+                <button type="button" onclick="closeQuickWorkCenterModal()" class="text-slate-400 hover:text-slate-600 text-sm font-bold">✕</button>
+            </div>
+
+            <form method="POST" action="{{ route('work-orders.work-centers.store') }}" class="space-y-4">
+                @csrf
+                <div class="space-y-1">
+                    <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Work Center / Production Line Name</label>
+                    <input type="text" id="newWcNameInput" name="work_center" placeholder="e.g. 5-Axis Horizontal Machining Cell 3" required class="w-full text-xs rounded-xl border-slate-200 focus:border-amber-500 focus:ring-amber-500">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Machine Code</label>
+                        <input type="text" name="code" value="MC-LINE-{{ rand(10,99) }}" required class="w-full text-xs rounded-xl border-slate-200 focus:border-amber-500 focus:ring-amber-500 font-mono">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Asset Unit Name</label>
+                        <input type="text" name="name" value="Production Cell Asset" required class="w-full text-xs rounded-xl border-slate-200 focus:border-amber-500 focus:ring-amber-500">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-2">
+                    <button type="button" onclick="useLineDirectly()" class="text-xs text-amber-600 font-bold hover:underline cursor-pointer">
+                        Use Immediately in Form
+                    </button>
+                    <div class="flex gap-2">
+                        <button type="button" onclick="closeQuickWorkCenterModal()" class="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl transition">Cancel</button>
+                        <button type="submit" class="px-4 py-2 text-xs font-bold text-white bg-amber-500 hover:bg-amber-600 rounded-xl transition">Save Work Center</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         function openOutputModal(id, num, prodName, planned, completed, uom) {
             document.getElementById('outputForm').action = '/work-orders/' + id + '/record-output';
@@ -467,6 +661,40 @@
             document.getElementById('modalProdName').innerText = prodName;
             document.getElementById('modalProgress').innerText = completed + ' / ' + planned + ' ' + uom;
             document.getElementById('outputModal').classList.remove('hidden');
+        }
+
+        function openQuickBomModal() {
+            document.getElementById('quickBomModal').classList.remove('hidden');
+        }
+        function closeQuickBomModal() {
+            document.getElementById('quickBomModal').classList.add('hidden');
+        }
+
+        function openQuickRoutingModal() {
+            document.getElementById('quickRoutingModal').classList.remove('hidden');
+        }
+        function closeQuickRoutingModal() {
+            document.getElementById('quickRoutingModal').classList.add('hidden');
+        }
+
+        function openQuickWorkCenterModal() {
+            document.getElementById('quickWorkCenterModal').classList.remove('hidden');
+        }
+        function closeQuickWorkCenterModal() {
+            document.getElementById('quickWorkCenterModal').classList.add('hidden');
+        }
+
+        function useLineDirectly() {
+            const val = document.getElementById('newWcNameInput').value.trim();
+            if (val) {
+                const select = document.getElementById('woWorkCenterSelect');
+                const opt = document.createElement('option');
+                opt.value = val;
+                opt.text = val;
+                opt.selected = true;
+                select.appendChild(opt);
+                closeQuickWorkCenterModal();
+            }
         }
     </script>
 </x-app-layout>

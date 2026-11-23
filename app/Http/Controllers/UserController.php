@@ -48,28 +48,44 @@ class UserController extends Controller
             'phone' => $validated['phone'] ?? null,
             'designation' => $validated['designation'] ?? null,
             'employee_code' => $validated['employee_code'] ?? null,
-            'status' => 'active',
+            'is_active' => true,
         ]);
 
         $user->assignRole($validated['role']);
 
-        if (!empty($validated['branch_id'])) {
-            $user->branches()->sync([$validated['branch_id'] => ['is_default' => true]]);
-        }
+        ActivityLog::log('create', 'rbac', "Created user: {$user->name} with role: {$validated['role']}");
 
-        ActivityLog::log('create', 'users', "Created new user: {$user->name} ({$user->email})", $user);
+        return back()->with('success', "Staff member {$user->name} created and role assigned.");
+    }
 
-        return back()->with('success', "User {$user->name} created successfully.");
+    public function storeRole(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|unique:roles,name|max:50',
+        ]);
+
+        $role = Role::create([
+            'name' => $request->name,
+            'guard_name' => 'web',
+        ]);
+
+        ActivityLog::log('create', 'rbac', "Created security role: {$role->name}");
+
+        return back()->with('success', "Security role {$role->name} created successfully.");
     }
 
     public function toggleStatus(User $user)
     {
-        $newStatus = $user->status === 'active' ? 'inactive' : 'active';
-        $user->update(['status' => $newStatus]);
+        if ($user->id === auth()->id()) {
+            return back()->withErrors(['error' => 'You cannot deactivate your own account.']);
+        }
 
-        ActivityLog::log('update', 'users', "Changed status of user {$user->name} to {$newStatus}", $user);
+        $user->is_active = !$user->is_active;
+        $user->save();
 
-        return back()->with('success', "User status updated to {$newStatus}.");
+        $action = $user->is_active ? 'activated' : 'deactivated';
+        ActivityLog::log('toggle_status', 'rbac', "User {$user->name} has been {$action}.");
+
+        return back()->with('success', "User account {$user->name} has been {$action}.");
     }
 }
-
