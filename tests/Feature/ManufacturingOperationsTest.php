@@ -18,7 +18,7 @@ class ManufacturingOperationsTest extends TestCase
     {
         parent::setUp();
         $this->seed(DatabaseSeeder::class);
-        $this->admin = User::where('email', 'admin@apexerp.com')->first();
+        $this->admin = User::where('email', 'admin@thrumble.manufacturer')->first();
     }
 
     public function test_all_permitted_operation_views_render_successfully(): void
@@ -208,12 +208,12 @@ class ManufacturingOperationsTest extends TestCase
     public function test_create_company_entity(): void
     {
         $response = $this->actingAs($this->admin)->post(route('companies.store'), [
-            'name' => 'Apex Aerospace Systems Ltd.',
-            'code' => 'APEX-AERO',
+            'name' => 'Thrumble Aerospace Systems Ltd.',
+            'code' => 'THRM-AERO',
             'currency' => 'INR',
         ]);
         $response->assertRedirect();
-        $this->assertDatabaseHas('companies', ['code' => 'APEX-AERO']);
+        $this->assertDatabaseHas('companies', ['code' => 'THRM-AERO']);
     }
 
     public function test_create_security_role(): void

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sign In - WebotApp Apex Manufacturing ERP</title>
+    <title>Sign In - thrumble.manufacturer</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,10 +19,10 @@
         <!-- Brand Header -->
         <div class="text-center mb-8">
             <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-500 text-white font-black text-2xl shadow-lg shadow-amber-500/20 mb-3">
-                W
+                T
             </div>
             <h1 class="text-2xl font-black tracking-tight text-slate-900 flex items-center justify-center gap-2">
-                <span>WebotApp</span>
+                <span>thrumble.<span class="text-amber-600">manufacturer</span></span>
                 <span class="text-xs px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200 font-mono font-bold">ERP</span>
             </h1>
             <p class="text-xs text-slate-500 mt-1 font-medium">Enterprise Manufacturing & Shop Floor Execution System</p>
@@ -46,7 +46,7 @@
 
                 <div>
                     <label for="email" class="block text-xs font-bold text-slate-700 mb-1.5">Work Email Address</label>
-                    <input type="email" name="email" id="email" required value="{{ old('email', 'admin@apexerp.com') }}" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition">
+                    <input type="email" name="email" id="email" required value="{{ old('email', 'admin@thrumble.manufacturer') }}" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition">
                 </div>
 
                 <div>
@@ -79,27 +79,27 @@
                     Quick Role Selector (Click to switch dashboard)
                 </div>
                 <div class="grid grid-cols-2 gap-2 text-[11px]">
-                    <button type="button" onclick="fillRole('admin@apexerp.com')" class="px-2.5 py-2 bg-slate-50 hover:bg-amber-50/80 border border-slate-200 hover:border-amber-300 rounded-xl text-left text-slate-800 transition shadow-2xs">
+                    <button type="button" onclick="fillRole('admin@thrumble.manufacturer')" class="px-2.5 py-2 bg-slate-50 hover:bg-amber-50/80 border border-slate-200 hover:border-amber-300 rounded-xl text-left text-slate-800 transition shadow-2xs">
                         <div class="font-bold text-amber-700 text-[10px]">Super Admin</div>
                         <div class="text-[10px] text-slate-500 truncate">Executive Command</div>
                     </button>
-                    <button type="button" onclick="fillRole('production@apexerp.com')" class="px-2.5 py-2 bg-slate-50 hover:bg-blue-50/80 border border-slate-200 hover:border-blue-300 rounded-xl text-left text-slate-800 transition shadow-2xs">
+                    <button type="button" onclick="fillRole('production@thrumble.manufacturer')" class="px-2.5 py-2 bg-slate-50 hover:bg-blue-50/80 border border-slate-200 hover:border-blue-300 rounded-xl text-left text-slate-800 transition shadow-2xs">
                         <div class="font-bold text-blue-700 text-[10px]">Production Head</div>
                         <div class="text-[10px] text-slate-500 truncate">Shop Floor / MES</div>
                     </button>
-                    <button type="button" onclick="fillRole('quality@apexerp.com')" class="px-2.5 py-2 bg-slate-50 hover:bg-purple-50/80 border border-slate-200 hover:border-purple-300 rounded-xl text-left text-slate-800 transition shadow-2xs">
+                    <button type="button" onclick="fillRole('quality@thrumble.manufacturer')" class="px-2.5 py-2 bg-slate-50 hover:bg-purple-50/80 border border-slate-200 hover:border-purple-300 rounded-xl text-left text-slate-800 transition shadow-2xs">
                         <div class="font-bold text-purple-700 text-[10px]">Quality Inspector</div>
                         <div class="text-[10px] text-slate-500 truncate">IQC / IPQC / NCRs</div>
                     </button>
-                    <button type="button" onclick="fillRole('inventory@apexerp.com')" class="px-2.5 py-2 bg-slate-50 hover:bg-emerald-50/80 border border-slate-200 hover:border-emerald-300 rounded-xl text-left text-slate-800 transition shadow-2xs">
+                    <button type="button" onclick="fillRole('inventory@thrumble.manufacturer')" class="px-2.5 py-2 bg-slate-50 hover:bg-emerald-50/80 border border-slate-200 hover:border-emerald-300 rounded-xl text-left text-slate-800 transition shadow-2xs">
                         <div class="font-bold text-emerald-700 text-[10px]">Inventory Manager</div>
                         <div class="text-[10px] text-slate-500 truncate">Stock Ledger & Bins</div>
                     </button>
-                    <button type="button" onclick="fillRole('accounts@apexerp.com')" class="px-2.5 py-2 bg-slate-50 hover:bg-teal-50/80 border border-slate-200 hover:border-teal-300 rounded-xl text-left text-slate-800 transition shadow-2xs">
+                    <button type="button" onclick="fillRole('accounts@thrumble.manufacturer')" class="px-2.5 py-2 bg-slate-50 hover:bg-teal-50/80 border border-slate-200 hover:border-teal-300 rounded-xl text-left text-slate-800 transition shadow-2xs">
                         <div class="font-bold text-teal-700 text-[10px]">Finance Manager</div>
                         <div class="text-[10px] text-slate-500 truncate">GL, AP/AR & GST</div>
                     </button>
-                    <button type="button" onclick="fillRole('operator@apexerp.com')" class="px-2.5 py-2 bg-slate-50 hover:bg-orange-50/80 border border-slate-200 hover:border-orange-300 rounded-xl text-left text-slate-800 transition shadow-2xs">
+                    <button type="button" onclick="fillRole('operator@thrumble.manufacturer')" class="px-2.5 py-2 bg-slate-50 hover:bg-orange-50/80 border border-slate-200 hover:border-orange-300 rounded-xl text-left text-slate-800 transition shadow-2xs">
                         <div class="font-bold text-orange-700 text-[10px]">Machine Operator</div>
                         <div class="text-[10px] text-slate-500 truncate">Machine Terminal</div>
                     </button>
@@ -107,8 +107,18 @@
             </div>
         </div>
 
-        <div class="text-center mt-6 text-[11px] text-slate-500 font-medium">
-            WebotApp Apex Manufacturing ERP • Commercial-Grade Open Source
+        <div class="text-center mt-6 space-y-1 text-[11px] text-slate-500 font-medium">
+            <div>thrumble.manufacturer &bull; Enterprise Manufacturing ERP &amp; MES</div>
+            <div>
+                Developed by
+                <a href="https://www.attrixtech.com" target="_blank" rel="noopener noreferrer" class="font-semibold text-amber-700 hover:text-amber-800 underline underline-offset-2 transition">
+                    Attrix Technologies
+                </a>
+                &bull; Marketing by
+                <a href="https://www.infusionn.in" target="_blank" rel="noopener noreferrer" class="font-semibold text-amber-700 hover:text-amber-800 underline underline-offset-2 transition">
+                    Infusionn Pvt. Ltd.
+                </a>
+            </div>
         </div>
     </div>
 

@@ -1,10 +1,22 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "thrumble/manufacturer",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "thrumble.manufacturer - Enterprise Manufacturing Execution System (MES) & ERP.",
+    "keywords": ["thrumble.manufacturer", "manufacturing", "erp", "mes", "laravel"],
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Attrix Technologies",
+            "homepage": "https://www.attrixtech.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Infusionn Pvt. Ltd.",
+            "homepage": "https://www.infusionn.in",
+            "role": "Marketing"
+        }
+    ],
     "require": {
         "php": "^8.3",
         "laravel/framework": "^13.17",

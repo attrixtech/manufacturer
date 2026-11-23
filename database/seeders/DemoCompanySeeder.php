@@ -15,16 +15,16 @@ class DemoCompanySeeder extends Seeder
     {
         // 1. Create Demo Manufacturing Company
         $company = Company::firstOrCreate(
-            ['code' => 'APEX-01'],
+            ['code' => 'THRM-01'],
             [
-                'name' => 'Apex Precision Engineering Pvt. Ltd.',
-                'legal_name' => 'Apex Precision Engineering Private Limited',
+                'name' => 'Thrumble Precision Engineering Pvt. Ltd.',
+                'legal_name' => 'Thrumble Precision Engineering Private Limited',
                 'gstin' => '27AABCA1234F1Z5',
                 'pan' => 'AABCA1234F',
                 'cin' => 'U28100MH2020PTC345678',
-                'email' => 'operations@apexprecision.in',
+                'email' => 'operations@thrumble.manufacturer',
                 'phone' => '+91 20 6712 3400',
-                'website' => 'https://apexprecision.in',
+                'website' => 'https://thrumble.manufacturer',
                 'currency' => 'INR',
                 'currency_symbol' => '₹',
                 'address' => 'Plot No. C-14, Chakan MIDC Phase II',
@@ -51,7 +51,7 @@ class DemoCompanySeeder extends Seeder
                 'type' => 'factory',
                 'gstin' => '27AABCA1234F1Z5',
                 'phone' => '+91 20 6712 3401',
-                'email' => 'plant.pune@apexprecision.in',
+                'email' => 'plant.pune@thrumble.manufacturer',
                 'address' => 'Plot No. C-14, Chakan MIDC Phase II',
                 'city' => 'Pune',
                 'state' => 'Maharashtra',
@@ -70,7 +70,7 @@ class DemoCompanySeeder extends Seeder
                 'type' => 'factory',
                 'gstin' => '29AABCA1234F1Z3',
                 'phone' => '+91 80 4123 9800',
-                'email' => 'plant.blr@apexprecision.in',
+                'email' => 'plant.blr@thrumble.manufacturer',
                 'address' => 'Plot 48, Peenya Industrial Area 3rd Phase',
                 'city' => 'Bengaluru',
                 'state' => 'Karnataka',
@@ -89,7 +89,7 @@ class DemoCompanySeeder extends Seeder
                 'type' => 'head_office',
                 'gstin' => '27AABCA1234F1Z5',
                 'phone' => '+91 22 2845 0000',
-                'email' => 'hq@apexprecision.in',
+                'email' => 'hq@thrumble.manufacturer',
                 'address' => 'Express Towers, 14th Floor, Nariman Point',
                 'city' => 'Mumbai',
                 'state' => 'Maharashtra',
@@ -130,7 +130,7 @@ class DemoCompanySeeder extends Seeder
         $usersData = [
             [
                 'name' => 'Rajesh Sharma',
-                'email' => 'admin@apexerp.com',
+                'email' => 'admin@thrumble.manufacturer',
                 'role' => 'Super Administrator',
                 'dept' => 'ENG',
                 'branch' => $mumbaiHQ->id,
@@ -139,7 +139,7 @@ class DemoCompanySeeder extends Seeder
             ],
             [
                 'name' => 'Vikram Deshmukh',
-                'email' => 'plant.manager@apexerp.com',
+                'email' => 'plant.manager@thrumble.manufacturer',
                 'role' => 'Plant Manager',
                 'dept' => 'PROD',
                 'branch' => $punePlant->id,
@@ -148,7 +148,7 @@ class DemoCompanySeeder extends Seeder
             ],
             [
                 'name' => 'Anil Kulkarni',
-                'email' => 'production@apexerp.com',
+                'email' => 'production@thrumble.manufacturer',
                 'role' => 'Production Head',
                 'dept' => 'PROD',
                 'branch' => $punePlant->id,
@@ -157,7 +157,7 @@ class DemoCompanySeeder extends Seeder
             ],
             [
                 'name' => 'Pooja Nair',
-                'email' => 'quality@apexerp.com',
+                'email' => 'quality@thrumble.manufacturer',
                 'role' => 'Quality Inspector',
                 'dept' => 'QAQC',
                 'branch' => $punePlant->id,
@@ -166,7 +166,7 @@ class DemoCompanySeeder extends Seeder
             ],
             [
                 'name' => 'Suresh Patil',
-                'email' => 'inventory@apexerp.com',
+                'email' => 'inventory@thrumble.manufacturer',
                 'role' => 'Warehouse & Inventory Manager',
                 'dept' => 'SCM',
                 'branch' => $punePlant->id,
@@ -175,7 +175,7 @@ class DemoCompanySeeder extends Seeder
             ],
             [
                 'name' => 'Meera Sundaram',
-                'email' => 'accounts@apexerp.com',
+                'email' => 'accounts@thrumble.manufacturer',
                 'role' => 'Accounts & Finance Manager',
                 'dept' => 'FIN',
                 'branch' => $mumbaiHQ->id,
@@ -184,7 +184,7 @@ class DemoCompanySeeder extends Seeder
             ],
             [
                 'name' => 'Dinesh Pawar',
-                'email' => 'operator@apexerp.com',
+                'email' => 'operator@thrumble.manufacturer',
                 'role' => 'Machine Operator',
                 'dept' => 'PROD',
                 'branch' => $punePlant->id,

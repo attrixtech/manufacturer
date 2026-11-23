@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title ?? 'Dashboard' }} - {{ config('app.name', 'WebotApp Apex Manufacturing ERP') }}</title>
+    <title>{{ $title ?? 'Dashboard' }} - {{ config('app.name', 'thrumble.manufacturer') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,15 +28,15 @@
         <aside class="w-full lg:w-72 bg-white border-r border-slate-200 flex flex-col shrink-0 select-none shadow-xs">
             <!-- Brand / Logo -->
             <div class="h-16 flex items-center justify-between px-5 border-b border-slate-200 bg-white">
-                <a href="{{ route('dashboard') }}" class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center font-extrabold text-white text-xl shadow-md shadow-amber-500/20">
-                        W
+                <a href="{{ route('dashboard') }}" class="flex items-center gap-3 min-w-0">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center font-extrabold text-white text-xl shadow-md shadow-amber-500/20 shrink-0">
+                        T
                     </div>
-                    <div>
-                        <div class="text-base font-bold tracking-tight text-slate-900 flex items-center gap-1.5">
-                            WebotApp <span class="text-xs px-1.5 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200 font-mono font-semibold">ERP</span>
+                    <div class="min-w-0">
+                        <div class="text-sm font-bold tracking-tight text-slate-900 flex items-center gap-1.5 truncate">
+                            <span class="truncate">thrumble.<span class="text-amber-600">manufacturer</span></span>
                         </div>
-                        <div class="text-[10px] text-slate-500 tracking-wider uppercase font-semibold">Apex Manufacturing MES</div>
+                        <div class="text-[10px] text-slate-500 tracking-wider uppercase font-semibold">Manufacturing ERP & MES</div>
                     </div>
                 </a>
             </div>
@@ -57,7 +57,7 @@
                     </span>
                 </div>
                 <div class="font-bold text-xs text-slate-900 truncate" title="{{ $activeCompany?->name }}">
-                    {{ $activeCompany?->name ?? 'Apex Precision Pvt Ltd' }}
+                    {{ $activeCompany?->name ?? 'Thrumble Precision Engineering Pvt. Ltd.' }}
                 </div>
                 <div class="text-[11px] text-amber-600 font-medium flex items-center gap-1 mt-0.5 truncate">
                     <svg class="w-3 h-3 text-amber-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -378,6 +378,30 @@
 
                 {{ $slot }}
             </main>
+
+            <!-- Brand & Attribution Footer -->
+            <footer class="border-t border-slate-200 bg-white/80 px-6 py-3 text-[11px] text-slate-500">
+                <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+                    <div class="font-semibold text-slate-700">
+                        thrumble.manufacturer &bull; Enterprise Manufacturing ERP &amp; MES
+                    </div>
+                    <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+                        <span>
+                            Developed by
+                            <a href="https://www.attrixtech.com" target="_blank" rel="noopener noreferrer" class="font-semibold text-amber-700 hover:text-amber-800 underline underline-offset-2 transition">
+                                Attrix Technologies
+                            </a>
+                        </span>
+                        <span class="text-slate-300">&bull;</span>
+                        <span>
+                            Marketing by
+                            <a href="https://www.infusionn.in" target="_blank" rel="noopener noreferrer" class="font-semibold text-amber-700 hover:text-amber-800 underline underline-offset-2 transition">
+                                Infusionn Pvt. Ltd.
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </footer>
         </div>
     </div>
 

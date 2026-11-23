@@ -1,4 +1,4 @@
-# WebotApp Apex Manufacturing ERP
+# thrumble.manufacturer
 
 <p align="center">
   <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
@@ -38,8 +38,8 @@ Enterprise-grade Manufacturing Execution System (MES) & Discrete/Batch ERP with 
 ### Setup Commands
 ```bash
 # Clone the repository
-git clone git@github.com:webotapp-academy/WebotApp-Apex-Manufacturing-ERP.git
-cd WebotApp-Apex-Manufacturing-ERP
+git clone <repository-url>
+cd thrumble.manufacturer
 
 # Install dependencies
 composer install
@@ -63,9 +63,17 @@ The application will run at `http://127.0.0.1:8000`.
 
 ---
 
+## 🤝 Credits
+
+- **Development**: [Attrix Technologies](https://www.attrixtech.com)
+- **Marketing**: [Infusionn Pvt. Ltd.](https://www.infusionn.in)
+
+---
+
 ## 📄 License
 
 This software is released under the **MIT License**.
 
-Copyright (c) 2026 WebotApp Academy.
+Copyright (c) 2026 thrumble.manufacturer.
+Developed by [Attrix Technologies](https://www.attrixtech.com). Marketing by [Infusionn Pvt. Ltd.](https://www.infusionn.in).
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software, subject to the standard MIT conditions.

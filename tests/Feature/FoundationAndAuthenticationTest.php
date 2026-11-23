@@ -29,12 +29,14 @@ class FoundationAndAuthenticationTest extends TestCase
     {
         $response = $this->get('/login');
         $response->assertStatus(200);
-        $response->assertSeeText('WebotApp');
+        $response->assertSeeText('thrumble.manufacturer');
+        $response->assertSeeText('Attrix Technologies');
+        $response->assertSeeText('Infusionn Pvt. Ltd.');
     }
 
     public function test_super_admin_sees_executive_command_center_and_admin_nav(): void
     {
-        $admin = User::where('email', 'admin@apexerp.com')->first();
+        $admin = User::where('email', 'admin@thrumble.manufacturer')->first();
         $this->assertNotNull($admin);
 
         $response = $this->actingAs($admin)->get('/dashboard');
@@ -43,11 +45,13 @@ class FoundationAndAuthenticationTest extends TestCase
         $response->assertSeeText('Enterprise Administration');
         $response->assertSeeText('Companies & Plants');
         $response->assertSeeText('Users, Roles & RBAC');
+        $response->assertSeeText('Attrix Technologies');
+        $response->assertSeeText('Infusionn Pvt. Ltd.');
     }
 
     public function test_quality_inspector_sees_quality_dashboard_and_no_admin_nav(): void
     {
-        $qualityUser = User::where('email', 'quality@apexerp.com')->first();
+        $qualityUser = User::where('email', 'quality@thrumble.manufacturer')->first();
         $this->assertNotNull($qualityUser);
 
         $response = $this->actingAs($qualityUser)->get('/dashboard');
@@ -61,7 +65,7 @@ class FoundationAndAuthenticationTest extends TestCase
 
     public function test_inventory_manager_sees_inventory_dashboard_and_stock_alerts(): void
     {
-        $invUser = User::where('email', 'inventory@apexerp.com')->first();
+        $invUser = User::where('email', 'inventory@thrumble.manufacturer')->first();
         $this->assertNotNull($invUser);
 
         $response = $this->actingAs($invUser)->get('/dashboard');
@@ -75,7 +79,7 @@ class FoundationAndAuthenticationTest extends TestCase
 
     public function test_operator_sees_machine_terminal_dashboard(): void
     {
-        $operator = User::where('email', 'operator@apexerp.com')->first();
+        $operator = User::where('email', 'operator@thrumble.manufacturer')->first();
         $this->assertNotNull($operator);
 
         $response = $this->actingAs($operator)->get('/dashboard');
@@ -89,7 +93,7 @@ class FoundationAndAuthenticationTest extends TestCase
 
     public function test_multi_company_and_branch_context_switching(): void
     {
-        $user = User::where('email', 'admin@apexerp.com')->first();
+        $user = User::where('email', 'admin@thrumble.manufacturer')->first();
         $branch = Branch::where('code', 'BLR-PLT')->first();
         $this->assertNotNull($branch);
 

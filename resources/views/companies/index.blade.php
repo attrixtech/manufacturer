@@ -285,17 +285,17 @@
                 <div class="grid grid-cols-2 gap-3">
                     <div class="space-y-1">
                         <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Entity Trade Name</label>
-                        <input type="text" name="name" placeholder="e.g. Apex Aerospace Pvt. Ltd." required class="w-full text-xs rounded-xl border-slate-200 focus:border-amber-500 focus:ring-amber-500">
+                        <input type="text" name="name" placeholder="e.g. Thrumble Aerospace Pvt. Ltd." required class="w-full text-xs rounded-xl border-slate-200 focus:border-amber-500 focus:ring-amber-500">
                     </div>
                     <div class="space-y-1">
                         <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Entity Code</label>
-                        <input type="text" name="code" placeholder="e.g. APEX-AERO" required class="w-full text-xs rounded-xl border-slate-200 focus:border-amber-500 focus:ring-amber-500 font-mono uppercase">
+                        <input type="text" name="code" placeholder="e.g. THRM-AERO" required class="w-full text-xs rounded-xl border-slate-200 focus:border-amber-500 focus:ring-amber-500 font-mono uppercase">
                     </div>
                 </div>
 
                 <div class="space-y-1">
                     <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Legal Registered Name</label>
-                    <input type="text" name="legal_name" placeholder="e.g. Apex Aerospace & Precision Engineering Private Limited" class="w-full text-xs rounded-xl border-slate-200 focus:border-amber-500 focus:ring-amber-500">
+                    <input type="text" name="legal_name" placeholder="e.g. Thrumble Aerospace & Precision Engineering Private Limited" class="w-full text-xs rounded-xl border-slate-200 focus:border-amber-500 focus:ring-amber-500">
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">

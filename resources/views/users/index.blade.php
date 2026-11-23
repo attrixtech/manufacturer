@@ -127,7 +127,7 @@
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block font-bold text-slate-700 mb-1">Email Address</label>
-                            <input type="email" name="email" required placeholder="ramesh@apexprecision.in" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 focus:bg-white focus:border-amber-500 focus:outline-none">
+                            <input type="email" name="email" required placeholder="ramesh@thrumble.manufacturer" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 focus:bg-white focus:border-amber-500 focus:outline-none">
                         </div>
                         <div>
                             <label class="block font-bold text-slate-700 mb-1">Initial Password</label>
