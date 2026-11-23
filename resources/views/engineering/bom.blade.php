@@ -436,8 +436,13 @@
                         <input type="text" name="bom_number" value="BOM-{{ date('Y') }}-{{ rand(100,999) }}" required class="w-full text-xs rounded-xl border-slate-200 focus:border-cyan-500 focus:ring-cyan-500 font-mono">
                     </div>
                     <div class="space-y-1">
-                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Finished Product</label>
-                        <select name="product_id" required class="w-full text-xs rounded-xl border-slate-200 focus:border-cyan-500 focus:ring-cyan-500">
+                        <div class="flex items-center justify-between">
+                            <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Finished Product</label>
+                            <button type="button" onclick="openQuickProductModal()" class="text-[10px] font-bold text-cyan-600 hover:text-cyan-800 hover:underline cursor-pointer">
+                                + Add Product
+                            </button>
+                        </div>
+                        <select name="product_id" id="bomProductSelect" required class="w-full text-xs rounded-xl border-slate-200 focus:border-cyan-500 focus:ring-cyan-500">
                             @foreach($products as $prod)
                                 <option value="{{ $prod->id }}">{{ $prod->code }} — {{ $prod->name }}</option>
                             @endforeach
@@ -623,7 +628,87 @@
         </div>
     </div>
 
+    <!-- Quick Add Product Modal -->
+    <div id="quickProductModal" class="hidden fixed inset-0 z-60 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 border border-slate-200 shadow-2xl space-y-4 my-8">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-cyan-500"></span>
+                    <h3 class="text-sm font-black text-slate-900">Create New Product / Finished Good</h3>
+                </div>
+                <button type="button" onclick="closeQuickProductModal()" class="text-slate-400 hover:text-slate-600 text-sm font-bold">✕</button>
+            </div>
+
+            <form method="POST" action="{{ route('products.store') }}" class="space-y-4">
+                @csrf
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Item Type</label>
+                        <select name="type" required class="w-full text-xs rounded-xl border-slate-200 focus:border-cyan-500 focus:ring-cyan-500 font-bold">
+                            <option value="finished_good" selected>Finished Good (FG)</option>
+                            <option value="semi_finished">Semi-Finished Assembly</option>
+                            <option value="raw_material">Raw Material</option>
+                            <option value="consumable">Consumable / Tool</option>
+                        </select>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">SKU / Item Code</label>
+                        <input type="text" name="code" placeholder="e.g. PART-FLG-500" required class="w-full text-xs rounded-xl border-slate-200 focus:border-cyan-500 focus:ring-cyan-500 font-mono uppercase font-bold">
+                    </div>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Product Name</label>
+                    <input type="text" name="name" placeholder="e.g. Heavy Duty ANSI Flange 500mm Class 300" required class="w-full text-xs rounded-xl border-slate-200 focus:border-cyan-500 focus:ring-cyan-500">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Category</label>
+                        <input type="text" name="category" placeholder="Flanges & Valves" required class="w-full text-xs rounded-xl border-slate-200 focus:border-cyan-500 focus:ring-cyan-500">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Unit of Measure</label>
+                        <select name="uom" required class="w-full text-xs rounded-xl border-slate-200 focus:border-cyan-500 focus:ring-cyan-500 font-mono">
+                            <option value="Pcs" selected>Pcs</option>
+                            <option value="Kg">Kg</option>
+                            <option value="Meters">Meters</option>
+                            <option value="Sets">Sets</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3">
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Standard Cost (₹)</label>
+                        <input type="number" step="0.01" min="0" name="standard_cost" value="2500.00" required class="w-full text-xs rounded-xl border-slate-200 focus:border-cyan-500 focus:ring-cyan-500 font-mono font-bold">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Initial Stock</label>
+                        <input type="number" step="0.01" min="0" name="current_stock" value="0.00" class="w-full text-xs rounded-xl border-slate-200 focus:border-cyan-500 focus:ring-cyan-500 font-mono">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Reorder Level</label>
+                        <input type="number" step="0.01" min="0" name="reorder_level" value="10.00" class="w-full text-xs rounded-xl border-slate-200 focus:border-cyan-500 focus:ring-cyan-500 font-mono">
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeQuickProductModal()" class="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl transition">Cancel</button>
+                    <button type="submit" class="px-4 py-2 text-xs font-bold text-white bg-cyan-600 hover:bg-cyan-700 rounded-xl transition">Save Product Master</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
+        function openQuickProductModal() {
+            document.getElementById('quickProductModal').classList.remove('hidden');
+        }
+        function closeQuickProductModal() {
+            document.getElementById('quickProductModal').classList.add('hidden');
+        }
+
         let compIndex = 1;
         function addComponentRow() {
             const tableBody = document.getElementById('componentsBody');

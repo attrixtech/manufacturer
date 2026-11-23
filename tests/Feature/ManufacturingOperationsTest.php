@@ -24,6 +24,7 @@ class ManufacturingOperationsTest extends TestCase
     public function test_all_permitted_operation_views_render_successfully(): void
     {
         $routes = [
+            'products.index',
             'work-orders.index',
             'bom.index',
             'inventory.index',
@@ -37,6 +38,26 @@ class ManufacturingOperationsTest extends TestCase
             $response = $this->actingAs($this->admin)->get(route($route));
             $response->assertStatus(200);
         }
+    }
+
+    public function test_create_finished_product(): void
+    {
+        $response = $this->actingAs($this->admin)->post(route('products.store'), [
+            'code' => 'PART-AERO-TURB-01',
+            'name' => 'Titanium Aerospace Turbine Impeller 300mm',
+            'type' => 'finished_good',
+            'category' => 'Aerospace Rotors',
+            'uom' => 'Pcs',
+            'standard_cost' => 14500.00,
+            'current_stock' => 10.00,
+            'reorder_level' => 5.00,
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseHas('products', [
+            'code' => 'PART-AERO-TURB-01',
+            'type' => 'finished_good',
+        ]);
     }
 
     public function test_create_work_order(): void

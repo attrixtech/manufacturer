@@ -46,6 +46,10 @@ Route::middleware('auth')->group(function () {
         return view('roadmap.index');
     })->name('roadmap.index');
 
+    // Products & Item Master
+    Route::get('/products', [\App\Http\Controllers\ProductController::class, 'index'])->name('products.index');
+    Route::post('/products', [\App\Http\Controllers\ProductController::class, 'store'])->name('products.store');
+
     // 1. Work Orders & MES
     Route::get('/work-orders', [WorkOrderController::class, 'index'])->name('work-orders.index');
     Route::post('/work-orders', [WorkOrderController::class, 'store'])->name('work-orders.store');

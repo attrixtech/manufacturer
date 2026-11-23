@@ -142,6 +142,17 @@
                             </a>
                         @endif
 
+                        <!-- Item Master / Products -->
+                        <a href="{{ route('products.index') }}" class="flex items-center justify-between px-3 py-2 rounded-lg transition-colors {{ request()->routeIs('products.*') ? 'bg-amber-500 text-white font-bold shadow-sm shadow-amber-500/20' : 'text-slate-700 hover:bg-slate-100' }}">
+                            <div class="flex items-center gap-3">
+                                <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('products.*') ? 'text-white' : 'text-cyan-600' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                </svg>
+                                <span>Products & Item Master</span>
+                            </div>
+                            <span class="text-[9px] {{ request()->routeIs('products.*') ? 'bg-white/20 text-white' : 'bg-cyan-50 text-cyan-700 border border-cyan-200' }} px-1.5 py-0.5 rounded font-mono font-bold">SKU</span>
+                        </a>
+
                         <!-- BOM / Routing Modules -->
                         @if(auth()->user()->can('bom.view'))
                             <a href="{{ route('bom.index') }}" class="flex items-center justify-between px-3 py-2 rounded-lg transition-colors {{ request()->routeIs('bom.*') ? 'bg-amber-500 text-white font-bold shadow-sm shadow-amber-500/20' : 'text-slate-700 hover:bg-slate-100' }}">
