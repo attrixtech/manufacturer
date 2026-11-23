@@ -2,19 +2,19 @@
     <x-slot:title>Master Development Roadmap & Execution Phases</x-slot:title>
 
     <div class="space-y-8">
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-slate-800">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-slate-200">
             <div>
-                <h1 class="text-xl font-extrabold text-white tracking-tight flex items-center gap-2">
+                <h1 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
                     <span>12-Phase Development Roadmap</span>
-                    <span class="px-2 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20 font-mono">Enterprise Scope</span>
+                    <span class="px-2 py-0.5 rounded-full text-xs font-bold bg-amber-50 text-amber-800 border border-amber-200 font-mono">Enterprise Scope</span>
                 </h1>
-                <p class="text-xs text-slate-400 mt-0.5">Execution roadmap derived directly from todo.txt specification</p>
+                <p class="text-xs text-slate-500 mt-0.5">Execution roadmap derived directly from todo.txt specification</p>
             </div>
 
             <div class="flex items-center gap-2">
-                <span class="text-xs text-slate-400 font-mono">Current Status:</span>
-                <span class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Phase 1 Deployed
+                <span class="text-xs text-slate-500 font-mono">Current Status:</span>
+                <span class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold flex items-center gap-1.5 shadow-2xs">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Phase 1 Deployed
                 </span>
             </div>
         </div>
@@ -176,34 +176,34 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             @foreach($phases as $p)
-                <div class="p-5 rounded-2xl bg-slate-900 border {{ $p['status'] === 'completed' ? 'border-emerald-500/40 bg-emerald-950/10' : ($p['status'] === 'ready' ? 'border-amber-500/40' : 'border-slate-800') }} relative overflow-hidden flex flex-col justify-between">
+                <div class="p-5 rounded-2xl bg-white border {{ $p['status'] === 'completed' ? 'border-emerald-300 bg-emerald-50/20 shadow-xs' : ($p['status'] === 'ready' ? 'border-amber-300 shadow-xs' : 'border-slate-200') }} relative overflow-hidden flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between text-xs mb-2">
-                            <span class="font-mono text-amber-500 font-bold uppercase tracking-wider text-[11px]">Phase {{ $p['num'] }}</span>
+                            <span class="font-mono text-amber-700 font-bold uppercase tracking-wider text-[11px]">Phase {{ $p['num'] }}</span>
                             @if($p['status'] === 'completed')
-                                <span class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30 flex items-center gap-1">
+                                <span class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-50 text-emerald-700 font-bold border border-emerald-200 flex items-center gap-1">
                                     <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                     </svg>
                                     COMPLETED
                                 </span>
                             @elseif($p['status'] === 'ready')
-                                <span class="px-2 py-0.5 rounded-full text-[10px] bg-amber-500/20 text-amber-400 font-bold border border-amber-500/30 flex items-center gap-1">
+                                <span class="px-2 py-0.5 rounded-full text-[10px] bg-amber-50 text-amber-800 font-bold border border-amber-200 flex items-center gap-1">
                                     READY TO COMMENCE
                                 </span>
                             @else
-                                <span class="px-2 py-0.5 rounded-full text-[10px] bg-slate-800 text-slate-400 font-medium">
+                                <span class="px-2 py-0.5 rounded-full text-[10px] bg-slate-100 text-slate-500 font-semibold">
                                     PLANNED
                                 </span>
                             @endif
                         </div>
 
-                        <h3 class="text-sm font-bold text-white mb-3">{{ $p['title'] }}</h3>
+                        <h3 class="text-sm font-bold text-slate-900 mb-3">{{ $p['title'] }}</h3>
 
-                        <ul class="space-y-1.5 text-xs text-slate-300">
+                        <ul class="space-y-1.5 text-xs text-slate-600">
                             @foreach($p['deliverables'] as $item)
                                 <li class="flex items-start gap-2">
-                                    <svg class="w-3.5 h-3.5 {{ $p['status'] === 'completed' ? 'text-emerald-400' : 'text-slate-500' }} shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg class="w-3.5 h-3.5 {{ $p['status'] === 'completed' ? 'text-emerald-600' : 'text-slate-400' }} shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $p['status'] === 'completed' ? 'M5 13l4 4L19 7' : 'M9 5l7 7-7 7' }}" />
                                     </svg>
                                     <span class="leading-relaxed">{{ $item }}</span>
@@ -216,4 +216,3 @@
         </div>
     </div>
 </x-app-layout>
-
